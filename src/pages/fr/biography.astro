@@ -1,0 +1,21 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={`${SITE_TITLE} - Biographie`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header lang="fr" />
+		<main>
+			<h1>Biographie</h1>
+			<p>Votre biographie va ici.</p>
+		</main>
+		<Footer />
+	</body>
+</html>
