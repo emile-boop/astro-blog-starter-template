@@ -11,9 +11,9 @@ const isFR = lang === 'fr';
 		<h2><a href={isFR ? '/fr/' : '/'}>{SITE_TITLE}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href={isFR ? '/fr/' : '/'}>{isFR ? 'Accueil' : 'Home'}</HeaderLink>
-			<HeaderLink href={isFR ? '/fr/blog' : '/blog'}>Blog</HeaderLink>
 			<HeaderLink href={isFR ? '/fr/biography' : '/biography'}>{isFR ? 'Biographie' : 'Biography'}</HeaderLink>
-			<HeaderLink href={isFR ? '/fr/contact' : '/contact'}>Contact</HeaderLink>
+			<HeaderLink href={isFR ? '/fr/portfolio' : '/portfolio'}>Portfolio</HeaderLink>
+			<HeaderLink href={isFR ? '/fr/contact' : '/contact'}>{isFR ? 'Contact' : 'Contact'}</HeaderLink>
 		</div>
 		<div class="social-links">
 			<a href={isFR ? '/' : '/fr/'} class="lang-switch">{isFR ? 'English' : 'Français'}</a>
