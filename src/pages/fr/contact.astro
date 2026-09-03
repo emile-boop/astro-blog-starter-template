@@ -1,0 +1,21 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={`${SITE_TITLE} - Contact`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header lang="fr" />
+		<main>
+			<h1>Contact</h1>
+			<p>Vous pouvez me joindre à <a href="mailto:contact@emilesavoie.com">contact@emilesavoie.com</a></p>
+		</main>
+		<Footer />
+	</body>
+</html>
