@@ -1,19 +1,21 @@
 ---
-const { lang = 'en' } = Astro.props;
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
+
+const { lang = 'en' } = Astro.props;
+const isFR = lang === 'fr';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2><a href={isFR ? '/fr/' : '/'}>{SITE_TITLE}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href={isFR ? '/fr/' : '/'}>{isFR ? 'Accueil' : 'Home'}</HeaderLink>
+			<HeaderLink href={isFR ? '/fr/blog' : '/blog'}>Blog</HeaderLink>
+			<HeaderLink href={isFR ? '/fr/about' : '/about'}>{isFR ? 'À propos' : 'About'}</HeaderLink>
 		</div>
 		<div class="social-links">
-			<a href="/fr/" class="lang-switch">Français</a>
+			<a href={isFR ? '/' : '/fr/'} class="lang-switch">{isFR ? 'English' : 'Français'}</a>
 		</div>
 	</nav>
 </header>
