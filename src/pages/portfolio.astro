@@ -94,7 +94,7 @@ const discography = [
 									<div class="card__body">
 										<h3 class="card__title">{work.title}</h3>
 										<p class="card__meta">{work.year}</p>
-										<p class="card__desc">{work.desc}</p>
+										<p class="card__desc" set:html={work.desc} />
 									</div>
 								</article>
 							))}
