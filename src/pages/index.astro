@@ -13,10 +13,29 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>Welcome! 👋</h1>
-			<p>
-				Hello, my name is Émile Savoie. Welcome to my personal website.
-			</p>
+			<section class="hero">
+				<div class="hero__content">
+					<h1 class="hero__name">Émile Savoie</h1>
+					<p class="hero__title">Pianist &amp; Composer</p>
+					<p class="hero__quote">
+						"Music begins where words end."
+					</p>
+				</div>
+				<div class="hero__scroll">Discover</div>
+			</section>
+
+			<section class="section">
+				<div class="container-narrow" style="text-align: center;">
+					<h2 style="margin-bottom: 2rem;">Welcome</h2>
+					<p style="font-size: 1.15rem; line-height: 1.9;">
+						As a pianist and composer, I share my passion for music through
+						original compositions, concerts, and recordings. My work draws
+						from the intersection of classical tradition and contemporary
+						creation, with a constant pursuit of simplicity and emotion.
+					</p>
+					<a href="/portfolio" class="btn">View my portfolio</a>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
