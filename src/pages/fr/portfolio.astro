@@ -2,20 +2,179 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+
+const compositions = [
+	{ title: "Nocturne en la mineur", year: "2025", desc: "Pièce pour piano solo, inspirée des nocturnes romantiques." },
+	{ title: "Suite pour cordes", year: "2024", desc: "Cinq mouvements pour quatuor à cordes, création au Festival de musique de chambre." },
+	{ title: "Études-tableaux", year: "2023", desc: "Recueil de six études pour piano, mêlant virtuosité et poésie." },
+	{ title: "Sonate pour violon et piano", year: "2023", desc: "Sonate en trois mouvements, créée à Montréal." },
+	{ title: "Préludes d'automne", year: "2022", desc: "Dix préludes courts pour piano, évocation des saisons." },
+	{ title: "Trio avec piano", year: "2021", desc: "Trio pour violon, violoncelle et piano, en quatre mouvements." },
+];
+
+const concerts = [
+	{ day: "15", month: "Nov", title: "Récital de piano — Œuvres originales", venue: "Salle Claude-Champagne, Montréal" },
+	{ day: "28", month: "Nov", title: "Concert de musique de chambre", venue: "Maison symphonique, Québec" },
+	{ day: "12", month: "Déc", title: "Création — Suite pour cordes", venue: "Festival de musique de chambre, Ottawa" },
+	{ day: "20", month: "Jan", title: "Récital — Préludes d'automne", venue: "Conservatoire de musique, Trois-Rivières" },
+	{ day: "05", month: "Fév", title: "Concert duo violon & piano", venue: "Salle Bourgie, Montréal" },
+];
+
+const discography = [
+	{
+		title: "Préludes d'automne",
+		year: "2024",
+		desc: "Recueil de préludes pour piano solo, enregistré en studio.",
+		tracks: [
+			{ name: "Prélude n°1 — Feuilles", duration: "3:42" },
+			{ name: "Prélude n°2 — Brume", duration: "4:15" },
+			{ name: "Prélude n°3 — Première neige", duration: "5:08" },
+			{ name: "Prélude n°4 — Crépuscule", duration: "3:56" },
+		],
+	},
+	{
+		title: "Études-tableaux",
+		year: "2023",
+		desc: "Six études pour piano, exploration de la virtuosité expressive.",
+		tracks: [
+			{ name: "Étude n°1 — Allegro", duration: "4:20" },
+			{ name: "Étude n°2 — Andante", duration: "5:33" },
+			{ name: "Étude n°3 — Presto", duration: "3:18" },
+			{ name: "Étude n°4 — Largo", duration: "6:45" },
+		],
+	},
+	{
+		title: "Sonate pour violon et piano",
+		year: "2022",
+		desc: "Sonate en trois mouvements, enregistrée avec violoniste invité.",
+		tracks: [
+			{ name: "I. Allegro moderato", duration: "8:12" },
+			{ name: "II. Andante", duration: "6:30" },
+			{ name: "III. Allegro vivace", duration: "7:45" },
+		],
+	},
+];
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={`${SITE_TITLE} - Portfolio`} description={SITE_DESCRIPTION} />
+		<BaseHead title="Portfolio — Émile Savoie" description="Œuvres, concerts et enregistrements d'Émile Savoie, pianiste et compositeur." />
 	</head>
 	<body>
-		<Header lang="fr" />
+		<Header />
 		<main>
-			<h1>Portfolio</h1>
-			<p>Votre portfolio va ici.</p>
+			<div class="page-header">
+				<div class="container">
+					<h1>Portfolio</h1>
+					<p class="page-header__subtitle">Œuvres, Concerts &amp; Enregistrements</p>
+				</div>
+			</div>
+
+			<section class="section" style="padding-top: 1rem;">
+				<div class="container">
+					<ul class="portfolio__tabs">
+						<li><button class="portfolio__tab active" data-target="oeuvres">Œuvres / Compositions</button></li>
+						<li><button class="portfolio__tab" data-target="concerts">Concerts / Événements</button></li>
+						<li><button class="portfolio__tab" data-target="enregistrements">Discographie / Enregistrements</button></li>
+					</ul>
+
+					<div id="oeuvres" class="portfolio__section">
+						<h2 class="portfolio__section-title">Œuvres / Compositions</h2>
+						<p class="portfolio__section-desc">Sélection d'œuvres originales pour piano, ensemble et musique de chambre.</p>
+						<div class="cards-grid">
+							{compositions.map((work) => (
+								<article class="card">
+									<div class="card__image">
+										<img src="/images/composition-placeholder.jpg" alt={work.title} loading="lazy" />
+									</div>
+									<div class="card__body">
+										<h3 class="card__title">{work.title}</h3>
+										<p class="card__meta">{work.year}</p>
+										<p class="card__desc">{work.desc}</p>
+									</div>
+								</article>
+							))}
+						</div>
+					</div>
+
+					<div id="concerts" class="portfolio__section">
+						<h2 class="portfolio__section-title">Concerts / Événements</h2>
+						<p class="portfolio__section-desc">Prochaines représentations et événements à venir.</p>
+						<ul class="concerts-list">
+							{concerts.map((concert) => (
+								<li class="concert-item">
+									<div class="concert-item__date">
+										<span class="concert-item__date-day">{concert.day}</span>
+										<span class="concert-item__date-month">{concert.month}</span>
+									</div>
+									<div class="concert-item__details">
+										<h3>{concert.title}</h3>
+										<p class="concert-item__venue">{concert.venue}</p>
+									</div>
+									<a href="/fr/contact" class="concert-item__link">Réserver →</a>
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<div id="enregistrements" class="portfolio__section">
+						<h2 class="portfolio__section-title">Discographie / Enregistrements</h2>
+						<p class="portfolio__section-desc">Albums et projets enregistrés en studio.</p>
+						{discography.map((album) => (
+							<div class="discography-item">
+								<div class="discography-item__cover">
+									<img src="/images/album-placeholder.jpg" alt={album.title} loading="lazy" />
+								</div>
+								<div class="discography-item__info">
+									<h3>{album.title}</h3>
+									<p class="discography-item__year">{album.year}</p>
+									<p>{album.desc}</p>
+									<ul class="discography-item__tracks">
+										{album.tracks.map((track, i) => (
+											<li>
+												<span><span class="track-number">{String(i + 1).padStart(2, '0')}.</span> {track.name}</span>
+												<span>{track.duration}</span>
+											</li>
+										))}
+									</ul>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<script>
+	const tabs = document.querySelectorAll('.portfolio__tab');
+	const sections = document.querySelectorAll('.portfolio__section');
+
+	tabs.forEach((tab) => {
+		tab.addEventListener('click', () => {
+			const target = document.getElementById(tab.dataset.target);
+			if (target) {
+				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		});
+	});
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					const id = entry.target.id;
+					tabs.forEach((t) => {
+						t.classList.toggle('active', t.dataset.target === id);
+					});
+				}
+			});
+		},
+		{ rootMargin: '-30% 0px -50% 0px' }
+	);
+
+	sections.forEach((s) => observer.observe(s));
+</script>
