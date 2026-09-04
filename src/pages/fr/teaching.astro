@@ -1,0 +1,69 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const offerings = [
+	{ icon: "♪", title: "Cours de piano individuels", desc: "Tous niveaux, du débutant à l'avancé. Approche personnalisée." },
+	{ icon: "♫", title: "Ateliers de composition", desc: "Initiation et perfectionnement à l'écriture musicale." },
+	{ icon: "♬", title: "Coaching d'interprétation", desc: "Préparation aux concours, examens et récitals." },
+	{ icon: "♩", title: "Cours en ligne", desc: "Sessions par visioconférence, flexibles et accessibles." },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title="Enseignement — Émile Savoie" description="Cours de piano, ateliers de composition et coaching d'interprétation avec Émile Savoie." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="page-header">
+				<div class="container">
+					<h1>Enseignement</h1>
+					<p class="page-header__subtitle">Transmettre la passion du piano</p>
+				</div>
+			</div>
+
+			<section class="section" style="padding-top: 2rem;">
+				<div class="container">
+					<div class="teaching">
+						<div class="teaching__info">
+							<p>
+								L'enseignement occupe une place essentielle dans ma vie
+								musicale. Après plus de quinze ans de pratique et de scène,
+								je partage aujourd'hui mon expérience avec des élèves de tous
+								âges et de tous niveaux.
+							</p>
+							<p>
+								Mon approche pédagogique privilégie l'écoute, la patience et
+								le plaisir de jouer. Chaque élève est unique — j'adapte ma
+								méthode à vos objectifs, qu'il s'agisse de découvrir le piano,
+								de perfectionner votre technique ou de préparer un récital.
+							</p>
+
+							<ul class="teaching__offerings">
+								{offerings.map((item) => (
+									<li>
+										<span class="teaching__offering-icon">{item.icon}</span>
+										<div class="teaching__offering-text">
+											<h4>{item.title}</h4>
+											<p>{item.desc}</p>
+										</div>
+									</li>
+								))}
+							</ul>
+
+							<a href="/fr/contact" class="btn">Me contacter</a>
+						</div>
+						<div class="teaching__image">
+							<img src="/images/teaching-placeholder.jpg" alt="Émile Savoie enseignant le piano" loading="lazy" />
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
