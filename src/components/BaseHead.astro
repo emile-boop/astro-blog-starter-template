@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
 	title: string;
 	description?: string;
@@ -27,14 +29,6 @@ const canonical = "https://emilesavoie.com";
 	href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap"
 	rel="stylesheet"
 />
-
-<!-- Override font variables to use Google Fonts -->
-<style is:global>
-	:root {
-		--font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif !important;
-		--font-body: "Jost", "Helvetica Neue", Arial, sans-serif !important;
-	}
-</style>
 
 <!-- SEO Meta Tags -->
 <title>{title}</title>
