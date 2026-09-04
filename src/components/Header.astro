@@ -1,66 +1,102 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
 
-const { lang = 'en' } = Astro.props;
-const isFR = lang === 'fr';
+const pathname = Astro.url.pathname;
+const isEn = pathname.startsWith('/en');
+
+const links = isEn
+  ? [
+      { href: '/en/', label: 'Home' },
+      { href: '/en/about', label: 'About' },
+      { href: '/en/portfolio', label: 'Portfolio' },
+      { href: '/en/teaching', label: 'Teaching' },
+      { href: '/en/contact', label: 'Contact' },
+    ]
+  : [
+      { href: '/', label: 'Accueil' },
+      { href: '/about', label: 'À propos' },
+      { href: '/portfolio', label: 'Portfolio' },
+      { href: '/teaching', label: 'Enseignement' },
+      { href: '/contact', label: 'Contact' },
+    ];
+
+const frToEn: Record<string, string> = {
+  '/': '/en/',
+  '/about': '/en/about',
+  '/portfolio': '/en/portfolio',
+  '/teaching': '/en/teaching',
+  '/contact': '/en/contact',
+};
+
+const enToFr: Record<string, string> = {
+  '/en/': '/',
+  '/en/about': '/about',
+  '/en/portfolio': '/portfolio',
+  '/en/teaching': '/teaching',
+  '/en/contact': '/contact',
+};
+
+const langHref = isEn ? enToFr[pathname] ?? '/' : frToEn[pathname] ?? '/en/';
 ---
 
 <header>
-	<nav>
-		<h2><a href={isFR ? '/fr/' : '/'}>{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href={isFR ? '/fr/' : '/'}>{isFR ? 'Accueil' : 'Home'}</HeaderLink>
-			<HeaderLink href={isFR ? '/fr/biography' : '/biography'}>{isFR ? 'Biographie' : 'Biography'}</HeaderLink>
-			<HeaderLink href={isFR ? '/fr/portfolio' : '/portfolio'}>Portfolio</HeaderLink>
-			<HeaderLink href={isFR ? '/fr/contact' : '/contact'}>{isFR ? 'Contact' : 'Contact'}</HeaderLink>
-		</div>
-		<div class="social-links">
-			<a href={isFR ? '/' : '/fr/'} class="lang-switch">{isFR ? 'English' : 'Français'}</a>
-		</div>
-	</nav>
+  <nav>
+    <h2>
+      <a href={isEn ? '/en/' : '/'}>Émile Savoie</a>
+    </h2>
+    <ul class="internal-links" id="nav-links">
+      {links.map((link) => (
+        <li>
+          <HeaderLink href={link.href}>{link.label}</HeaderLink>
+        </li>
+      ))}
+    </ul>
+    <div class="nav-actions">
+      <a href={langHref} class="lang-switch" aria-label={isEn ? 'Passer en français' : 'Switch to English'}>
+        {isEn ? 'FR' : 'EN'}
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
 </header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links {
-		display: flex;
-	}
-	.lang-switch {
-		font-weight: bold;
-		color: var(--accent);
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
+<style>
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .nav-toggle span {
+    width: 24px;
+    height: 1px;
+    background-color: var(--color-text);
+    transition: 0.3s;
+  }
+  @media (max-width: 900px) {
+    .nav-toggle {
+      display: flex;
+    }
+  }
 </style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    const isOpen = links?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+</script>
