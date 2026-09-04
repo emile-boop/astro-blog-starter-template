@@ -11,12 +11,32 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header lang="fr" />
+		<Header />
 		<main>
-			<h1>Bienvenue ! 👋</h1>
-			<p>
-				Bonjour, je m'appelle Émile Savoie. Bienvenue sur mon site personnel.
-			</p>
+			<section class="hero">
+				<div class="hero__content">
+					<h1 class="hero__name">Émile Savoie</h1>
+					<p class="hero__title">Pianiste &amp; Compositeur</p>
+					<p class="hero__quote">
+						« La musique commence là où les mots s'arrêtent. »
+					</p>
+				</div>
+				<div class="hero__scroll">Découvrir</div>
+			</section>
+
+			<section class="section">
+				<div class="container-narrow" style="text-align: center;">
+					<h2 style="margin-bottom: 2rem;">Bienvenue</h2>
+					<p style="font-size: 1.15rem; line-height: 1.9;">
+						Pianiste et compositeur, je partage ma passion pour la musique à
+						travers des compositions originales, des concerts et des
+						enregistrements. Mon univers puise à la croisée du classique et de
+						la création contemporaine, avec une recherche constante de
+						simplicité et d'émotion.
+					</p>
+					<a href="/fr/portfolio" class="btn">Voir mon portfolio</a>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
