@@ -1,0 +1,68 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const offerings = [
+	{ icon: "♪", title: "Individual Piano Lessons", desc: "All levels, from beginner to advanced. Personalized approach." },
+	{ icon: "♫", title: "Composition Workshops", desc: "Introduction and refinement of musical writing." },
+	{ icon: "♬", title: "Performance Coaching", desc: "Preparation for competitions, exams, and recitals." },
+	{ icon: "♩", title: "Online Lessons", desc: "Video conference sessions, flexible and accessible." },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Teaching — Émile Savoie" description="Piano lessons, composition workshops, and performance coaching with Émile Savoie." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="page-header">
+				<div class="container">
+					<h1>Teaching</h1>
+					<p class="page-header__subtitle">Sharing the passion for piano</p>
+				</div>
+			</div>
+
+			<section class="section" style="padding-top: 2rem;">
+				<div class="container">
+					<div class="teaching">
+						<div class="teaching__info">
+							<p>
+								Teaching holds an essential place in my musical life. After
+								more than fifteen years of practice and performance, I now
+								share my experience with students of all ages and levels.
+							</p>
+							<p>
+								My pedagogical approach emphasizes listening, patience, and
+								the joy of playing. Every student is unique — I adapt my method
+								to your goals, whether you are discovering the piano,
+								refining your technique, or preparing for a recital.
+							</p>
+
+							<ul class="teaching__offerings">
+								{offerings.map((item) => (
+									<li>
+										<span class="teaching__offering-icon">{item.icon}</span>
+										<div class="teaching__offering-text">
+											<h4>{item.title}</h4>
+											<p>{item.desc}</p>
+										</div>
+									</li>
+								))}
+							</ul>
+
+							<a href="/contact" class="btn">Contact me</a>
+						</div>
+						<div class="teaching__image">
+							<img src="/images/teaching-placeholder.jpg" alt="Émile Savoie teaching piano" loading="lazy" />
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
