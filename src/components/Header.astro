@@ -2,47 +2,47 @@
 import HeaderLink from './HeaderLink.astro';
 
 const pathname = Astro.url.pathname;
-const isEn = pathname.startsWith('/en');
+const isFr = pathname.startsWith('/fr');
 
-const links = isEn
+const links = isFr
   ? [
-      { href: '/en/', label: 'Home' },
-      { href: '/en/about', label: 'About' },
-      { href: '/en/portfolio', label: 'Portfolio' },
-      { href: '/en/teaching', label: 'Teaching' },
-      { href: '/en/contact', label: 'Contact' },
+      { href: '/fr/', label: 'Accueil' },
+      { href: '/fr/about', label: 'À propos' },
+      { href: '/fr/portfolio', label: 'Portfolio' },
+      { href: '/fr/teaching', label: 'Enseignement' },
+      { href: '/fr/contact', label: 'Contact' },
     ]
   : [
-      { href: '/', label: 'Accueil' },
-      { href: '/about', label: 'À propos' },
+      { href: '/', label: 'Home' },
+      { href: '/about', label: 'About' },
       { href: '/portfolio', label: 'Portfolio' },
-      { href: '/teaching', label: 'Enseignement' },
+      { href: '/teaching', label: 'Teaching' },
       { href: '/contact', label: 'Contact' },
     ];
 
-const frToEn: Record<string, string> = {
-  '/': '/en/',
-  '/about': '/en/about',
-  '/portfolio': '/en/portfolio',
-  '/teaching': '/en/teaching',
-  '/contact': '/en/contact',
-};
-
 const enToFr: Record<string, string> = {
-  '/en/': '/',
-  '/en/about': '/about',
-  '/en/portfolio': '/portfolio',
-  '/en/teaching': '/teaching',
-  '/en/contact': '/contact',
+  '/': '/fr/',
+  '/about': '/fr/about',
+  '/portfolio': '/fr/portfolio',
+  '/teaching': '/fr/teaching',
+  '/contact': '/fr/contact',
 };
 
-const langHref = isEn ? enToFr[pathname] ?? '/' : frToEn[pathname] ?? '/en/';
+const frToEn: Record<string, string> = {
+  '/fr/': '/',
+  '/fr/about': '/about',
+  '/fr/portfolio': '/portfolio',
+  '/fr/teaching': '/teaching',
+  '/fr/contact': '/contact',
+};
+
+const langHref = isFr ? frToEn[pathname] ?? '/' : enToFr[pathname] ?? '/fr/';
 ---
 
 <header>
   <nav>
     <h2>
-      <a href={isEn ? '/en/' : '/'}>Émile Savoie</a>
+      <a href={isFr ? '/fr/' : '/'}>Émile Savoie</a>
     </h2>
     <ul class="internal-links" id="nav-links">
       {links.map((link) => (
@@ -52,8 +52,8 @@ const langHref = isEn ? enToFr[pathname] ?? '/' : frToEn[pathname] ?? '/en/';
       ))}
     </ul>
     <div class="nav-actions">
-      <a href={langHref} class="lang-switch" aria-label={isEn ? 'Passer en français' : 'Switch to English'}>
-        {isEn ? 'FR' : 'EN'}
+      <a href={langHref} class="lang-switch" aria-label={isFr ? 'Switch to English' : 'Passer en français'}>
+        {isFr ? 'EN' : 'FR'}
       </a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">
         <span></span>
