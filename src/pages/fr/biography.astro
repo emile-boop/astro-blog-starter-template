@@ -2,19 +2,66 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
-		<BaseHead title={`${SITE_TITLE} - Biographie`} description={SITE_DESCRIPTION} />
+		<BaseHead title="À propos — Émile Savoie" description="Biographie d'Émile Savoie, pianiste et compositeur." />
 	</head>
 	<body>
-		<Header lang="fr" />
+		<Header />
 		<main>
-			<h1>Biographie</h1>
-			<p>Votre biographie va ici.</p>
+			<div class="page-header">
+				<div class="container">
+					<h1>À propos</h1>
+					<p class="page-header__subtitle">Pianiste &amp; Compositeur</p>
+				</div>
+			</div>
+
+			<section class="section" style="padding-top: 2rem;">
+				<div class="container">
+					<div class="about">
+						<div class="about__image">
+							<img src="/images/about-placeholder.jpg" alt="Émile Savoie au piano" loading="lazy" />
+						</div>
+						<div class="about__text">
+							<p>
+								Né au Québec, Émile Savoie développe très tôt un attachement
+								profond pour le piano et la composition. Formé auprès de maîtres
+								reconnus, il affine son langage musical à la rencontre du
+								répertoire classique et de l'écriture contemporaine.
+							</p>
+							<p>
+								Son travail de compositeur s'inscrit dans une démarche de
+								simplicité et de clarté — chaque note a sa place, chaque
+								silence a son sens. Ses œuvres ont été interprétées dans
+								plusieurs salles et festivals, au Canada comme à l'international.
+							</p>
+							<p>
+								En parallèle de sa carrière d'interprète et de compositeur,
+								Émile se consacre à l'enseignement, transmettant aux nouvelles
+								générations le plaisir et l'exigence de l'art pianistique.
+							</p>
+
+							<div class="about__highlights">
+								<div class="about__highlight">
+									<span class="about__highlight-number">15+</span>
+									<span class="about__highlight-label">Ans de carrière</span>
+								</div>
+								<div class="about__highlight">
+									<span class="about__highlight-number">50+</span>
+									<span class="about__highlight-label">Concerts donnés</span>
+								</div>
+								<div class="about__highlight">
+									<span class="about__highlight-number">30+</span>
+									<span class="about__highlight-label">Compositions originales</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
