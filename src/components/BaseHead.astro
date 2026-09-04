@@ -1,6 +1,4 @@
 ---
-import { SEO } from "astro-seo";
-
 interface Props {
 	title: string;
 	description?: string;
@@ -12,6 +10,8 @@ const {
 	description = "Émile Savoie — Pianist & Composer",
 	image = "/default-og-image.png",
 } = Astro.props;
+
+const canonical = "https://emilesavoie.com";
 ---
 
 <!-- Global Metadata -->
@@ -36,21 +36,20 @@ const {
 	}
 </style>
 
-<!-- SEO -->
-<SEO
-	title={title}
-	description={description}
-	openGraph={{
-		title,
-		description,
-		type: "website",
-		url: "https://emilesavoie.com",
-		images: [{ url: image }],
-	}}
-	twitter={{
-		card: "summary_large_image",
-		title,
-		description,
-	}}
-	canonical="https://emilesavoie.com"
-/>
+<!-- SEO Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
