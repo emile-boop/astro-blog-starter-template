@@ -1,7 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 
-const pathname = Astro.url.pathname;
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isFr = pathname.startsWith('/fr');
 
 const links = isFr
@@ -20,26 +20,21 @@ const links = isFr
       { href: '/contact', label: 'Contact' },
     ];
 
-const enToFr: Record<string, string> = {
-  '/': '/fr/',
-  '/biography': '/fr/biography',
-  '/portfolio': '/fr/portfolio',
-  '/teaching': '/fr/teaching',
-  '/contact': '/fr/contact',
-};
-
-const frToEn: Record<string, string> = {
-  '/fr/': '/',
-  '/fr/biography': '/biography',
-  '/fr/portfolio': '/portfolio',
-  '/fr/teaching': '/teaching',
-  '/fr/contact': '/contact',
-};
-
-const langHref = isFr ? frToEn[pathname] ?? '/' : enToFr[pathname] ?? '/fr/';
+// Calcul automatique du lien de changement de langue
+let langHref;
+if (isFr) {
+  langHref = pathname.replace(/^\/fr/, '') || '/';
+} else {
+  langHref = pathname === '/' ? '/fr/' : '/fr' + pathname;
+}
 ---
 
 <header>
+  <div class="construction-banner">
+    {isFr
+      ? '⚠️ Site en construction — Certaines informations peuvent être inexactes.'
+      : '⚠️ Website under construction — Some information may be inaccurate.'}
+  </div>
   <nav>
     <h2>
       <a href={isFr ? '/fr/' : '/'}>Émile Savoie</a>
@@ -65,6 +60,14 @@ const langHref = isFr ? frToEn[pathname] ?? '/' : enToFr[pathname] ?? '/fr/';
 </header>
 
 <style>
+  .construction-banner {
+    background-color: #6b5b4a;
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
   .nav-actions {
     display: flex;
     align-items: center;
