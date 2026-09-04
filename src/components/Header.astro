@@ -7,14 +7,14 @@ const isFr = pathname.startsWith('/fr');
 const links = isFr
   ? [
       { href: '/fr/', label: 'Accueil' },
-      { href: '/fr/about', label: 'À propos' },
+      { href: '/fr/biography', label: 'Biographie' },
       { href: '/fr/portfolio', label: 'Portfolio' },
       { href: '/fr/teaching', label: 'Enseignement' },
       { href: '/fr/contact', label: 'Contact' },
     ]
   : [
       { href: '/', label: 'Home' },
-      { href: '/about', label: 'About' },
+      { href: '/biography', label: 'Biography' },
       { href: '/portfolio', label: 'Portfolio' },
       { href: '/teaching', label: 'Teaching' },
       { href: '/contact', label: 'Contact' },
@@ -22,7 +22,7 @@ const links = isFr
 
 const enToFr: Record<string, string> = {
   '/': '/fr/',
-  '/about': '/fr/about',
+  '/biography': '/fr/biography',
   '/portfolio': '/fr/portfolio',
   '/teaching': '/fr/teaching',
   '/contact': '/fr/contact',
@@ -30,7 +30,7 @@ const enToFr: Record<string, string> = {
 
 const frToEn: Record<string, string> = {
   '/fr/': '/',
-  '/fr/about': '/about',
+  '/fr/biography': '/biography',
   '/fr/portfolio': '/portfolio',
   '/fr/teaching': '/teaching',
   '/fr/contact': '/contact',
