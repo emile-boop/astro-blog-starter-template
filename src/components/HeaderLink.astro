@@ -6,12 +6,18 @@ type Props = HTMLAttributes<'a'>;
 const { href, class: className, ...props } = Astro.props;
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const normalizedHref = href.replace(/\/$/, '') || '/';
-const isActive = normalizedHref === pathname || (normalizedHref !== '/' && pathname.startsWith(normalizedHref + '/'));
+
+// Pages "racines" qui ne doivent pas être actives sur les sous-pages
+const rootPaths = ['/', '/fr'];
+const isRoot = rootPaths.includes(normalizedHref);
+
+const isActive = normalizedHref === pathname || (!isRoot && pathname.startsWith(normalizedHref + '/'));
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
 	<slot />
 </a>
+
 <style>
 	a {
 		display: inline-block;
