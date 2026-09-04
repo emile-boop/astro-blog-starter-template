@@ -19,6 +19,13 @@
 	font-style: italic;
 	font-display: swap;
 }
+@font-face {
+	font-family: "GillSans";
+	src: url("/fonts/gillsans-bolditalic.ttf") format("truetype");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
 
 :root {
 	--accent: #6b5b4a;
