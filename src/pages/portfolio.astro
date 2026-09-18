@@ -28,7 +28,7 @@ const compositions = [
 	{ title: "Les nuages au-dessus de l'eau", year: "2024", instrumentation: "Mixed instrumentation (at least two players)", duration: "1:50" },
 	// 2023
 	{ title: "She Wants To Cry", year: "2023", instrumentation: "Electroacoustic", duration: "7:11" },
-	{ title: "Invention en do mineur", year: "2023", instrumentation: "Piano", duration: "1:29" },
+	{ title: "Invention in c minor", year: "2023", instrumentation: "Piano", duration: "1:29" },
 	// 2022
 	{ title: "Rites Nocturnes", year: "2022", instrumentation: "Wind orchestra", duration: "13:32", movements: "Movements 1 & 2" },
 	{ title: "Prelude No. 1", year: "2022", instrumentation: "Piano", duration: "1:55" },
@@ -49,13 +49,13 @@ const compositions = [
 	{ title: "Morts inquiets", year: "2021", instrumentation: "SATB + piano", duration: "4:34" },
 	{ title: "Menus Félins", year: "2021", instrumentation: "SATB + piano", duration: "4:57", movements: "Movements 1 & 2" },
 	{ title: "Une autre tombe", year: "2021", instrumentation: "Piano, voice", duration: "2:40" },
-	{ title: "Trio Sonata", year: "2021", instrumentation: "Flute, violin, continuo", duration: "2:07", movements: "Movement 1" },
+	{ title: "Trio sonata", year: "2021", instrumentation: "Flute, violin, continuo", duration: "2:07", movements: "Movement 1" },
 	// 2020
 	{ title: "TEG", year: "2020", instrumentation: "Electroacoustic", duration: "3:40" },
 	{ title: "Libération", year: "2020", instrumentation: "Piano, flute", duration: "2:19" },
-	{ title: "Impromptu Nº 1", year: "2020", instrumentation: "Piano", duration: "1:40" },
-	{ title: "Scherzo Nº 2", year: "2020", instrumentation: "Piano", duration: "6:19" },
-	{ title: "Adagio pour flûte et piano", year: "2020", instrumentation: "Piano, flute", duration: "2:56" },
+	{ title: "Impromptu No. 1", year: "2020", instrumentation: "Piano", duration: "1:40" },
+	{ title: "Scherzo No. 2", year: "2020", instrumentation: "Piano", duration: "6:19" },
+	{ title: "Adagio for flute and piano", year: "2020", instrumentation: "Piano, flute", duration: "2:56" },
 	{ title: "Esperluète", year: "2020", instrumentation: "Flute, B♭ clarinet, violin, cello, timpani", duration: "1:13" },
 	{ title: "A Little Groove", year: "2020", instrumentation: "Trumpet, alto saxophone, tenor saxophone, baritone saxophone, tenor trombone, piano, electric guitar, bass guitar, drum kit", duration: "2:19" },
 	{ title: "La pensée d'une vie", year: "2020", instrumentation: "String quartet", duration: "2:42" },
@@ -77,11 +77,10 @@ const compositions = [
 	{ title: "Au cœur des ténèbres", year: "2015", instrumentation: "Two flutes, oboe, French horn, bassoon, cello, piano", duration: "1:37" },
 	// 2014
 	{ title: "Moments musicaux", year: "2014", instrumentation: "Piano, flute", duration: "1:06" },
+	{ title: "Pris", year: "2014", instrumentation: "Harpsichord, recorder", duration: "2:57", movements: "Composed 2013–2014" },
 	// 2013
 	{ title: "Brindille", year: "2013", instrumentation: "Two flutes", duration: "0:33" },
 	{ title: "Course", year: "2013", instrumentation: "Bassoon, euphonium", duration: "0:52" },
-	// 2013–2014
-	{ title: "Pris", year: "2013–2014", instrumentation: "Harpsichord, recorder", duration: "2:57" },
 ];
 
 // Group by year (already sorted most recent first)
@@ -175,9 +174,9 @@ const discography = [
 									<table class="works-table">
 										<thead>
 											<tr>
-												<th>Title</th>
-												<th class="works-table__inst">Instrumentation</th>
-												<th class="works-table__dur">Duration</th>
+												<th class="works-table__col-title">Title</th>
+												<th class="works-table__col-inst">Instrumentation</th>
+												<th class="works-table__col-dur">Duration</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -250,7 +249,7 @@ const discography = [
 </html>
 
 <style>
-	/* === Works catalogue === */
+	/* === Works catalogue — separate tables per year, aligned columns === */
 	.works-catalogue {
 		margin-top: 2rem;
 	}
@@ -272,7 +271,13 @@ const discography = [
 		width: 100%;
 		border-collapse: collapse;
 		font-size: 0.95rem;
+		table-layout: fixed;
 	}
+
+	/* Same column widths on every table → columns align across years */
+	.works-table__col-title { width: 32%; }
+	.works-table__col-inst   { width: 51%; }
+	.works-table__col-dur    { width: 17%; }
 
 	.works-table thead th {
 		font-family: var(--font-sans, sans-serif);
@@ -284,6 +289,10 @@ const discography = [
 		text-align: left;
 		padding: 0.75rem 1rem;
 		border-bottom: 1px solid var(--color-border, #e5e0d8);
+	}
+
+	.works-table thead th.works-table__col-dur {
+		text-align: right;
 	}
 
 	.works-table tbody tr {
@@ -305,7 +314,6 @@ const discography = [
 		font-family: var(--font-serif, Georgia, serif);
 		font-size: 1.05rem;
 		color: var(--color-text, #1a1a1a);
-		white-space: nowrap;
 	}
 
 	.works-table__mvt {
@@ -325,7 +333,6 @@ const discography = [
 	.works-table__dur {
 		color: var(--color-text-muted, #888);
 		font-size: 0.9rem;
-		white-space: nowrap;
 		text-align: right;
 	}
 
@@ -343,7 +350,7 @@ const discography = [
 			width: 100%;
 		}
 
-		.works-table tr {
+		.works-table tbody tr {
 			padding: 1rem 0;
 			border-bottom: 1px solid var(--color-border, #e5e0d8);
 		}
@@ -355,7 +362,6 @@ const discography = [
 
 		.works-table__title {
 			font-size: 1.1rem;
-			white-space: normal;
 		}
 
 		.works-table__inst::before {
