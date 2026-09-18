@@ -77,11 +77,10 @@ const compositions = [
 	{ title: "Au cœur des ténèbres", year: "2015", instrumentation: "Deux flûtes, hautbois, cor en fa, basson, violoncelle, piano", duration: "1:37" },
 	// 2014
 	{ title: "Moments musicaux", year: "2014", instrumentation: "Piano, flûte", duration: "1:06" },
+	{ title: "Pris", year: "2014", instrumentation: "Clavecin, flûte à bec", duration: "2:57", movements: "Composé 2013–2014" },
 	// 2013
 	{ title: "Brindille", year: "2013", instrumentation: "Deux flûtes", duration: "0:33" },
 	{ title: "Course", year: "2013", instrumentation: "Basson, euphonium", duration: "0:52" },
-	// 2013–2014
-	{ title: "Pris", year: "2013–2014", instrumentation: "Clavecin, flûte à bec", duration: "2:57" },
 ];
 
 // Grouper par année (déjà trié du plus récent au plus ancien)
@@ -166,7 +165,7 @@ const discography = [
 
 					<div id="oeuvres" class="portfolio__section">
 						<h2 class="portfolio__section-title">Œuvres / Compositions</h2>
-						<p class="portfolio__section-desc">Catalogue complet des œuvres originales — {compositions.length} compositions (2013–2026).</p>
+						<p class="portfolio__section-desc">Catalogue d'œuvres originales — {compositions.length} compositions (2013–2026).</p>
 
 						<div class="works-catalogue">
 							{compositionsByYear.map((group) => (
@@ -175,9 +174,9 @@ const discography = [
 									<table class="works-table">
 										<thead>
 											<tr>
-												<th>Titre</th>
-												<th class="works-table__inst">Instrumentation</th>
-												<th class="works-table__dur">Durée</th>
+												<th class="works-table__col-title">Titre</th>
+												<th class="works-table__col-inst">Instrumentation</th>
+												<th class="works-table__col-dur">Durée</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -250,7 +249,7 @@ const discography = [
 </html>
 
 <style>
-	/* === Catalogue des œuvres === */
+	/* === Catalogue des œuvres — tableaux par année, colonnes alignées === */
 	.works-catalogue {
 		margin-top: 2rem;
 	}
@@ -272,7 +271,13 @@ const discography = [
 		width: 100%;
 		border-collapse: collapse;
 		font-size: 0.95rem;
+		table-layout: fixed;
 	}
+
+	/* Mêmes largeurs de colonnes sur chaque tableau → alignement parfait */
+	.works-table__col-title { width: 32%; }
+	.works-table__col-inst   { width: 51%; }
+	.works-table__col-dur    { width: 17%; }
 
 	.works-table thead th {
 		font-family: var(--font-sans, sans-serif);
@@ -284,6 +289,10 @@ const discography = [
 		text-align: left;
 		padding: 0.75rem 1rem;
 		border-bottom: 1px solid var(--color-border, #e5e0d8);
+	}
+
+	.works-table thead th.works-table__col-dur {
+		text-align: right;
 	}
 
 	.works-table tbody tr {
@@ -305,7 +314,6 @@ const discography = [
 		font-family: var(--font-serif, Georgia, serif);
 		font-size: 1.05rem;
 		color: var(--color-text, #1a1a1a);
-		white-space: nowrap;
 	}
 
 	.works-table__mvt {
@@ -325,7 +333,6 @@ const discography = [
 	.works-table__dur {
 		color: var(--color-text-muted, #888);
 		font-size: 0.9rem;
-		white-space: nowrap;
 		text-align: right;
 	}
 
@@ -343,7 +350,7 @@ const discography = [
 			width: 100%;
 		}
 
-		.works-table tr {
+		.works-table tbody tr {
 			padding: 1rem 0;
 			border-bottom: 1px solid var(--color-border, #e5e0d8);
 		}
@@ -355,7 +362,6 @@ const discography = [
 
 		.works-table__title {
 			font-size: 1.1rem;
-			white-space: normal;
 		}
 
 		.works-table__inst::before {
