@@ -3,17 +3,99 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
+// === Catalogue of works — sorted by year, most recent first ===
 const compositions = [
-	{ title: "Encre d'écorce", year: "2022", desc: "Classical, Chamber music, Poetry" },
-	{ title: "L'île", year: "2022", desc: "From the video game <span style=\"font-weight: 600; font-style: italic;\">Ikolia</span>" },
-	{ title: "Marche en Nouvelle Terre", year: "2021", desc: "Overture, Orchestral, Video Games" },
-	{ title: "Esperluète", year: "2020", desc: "Contemporary, Classical, Experimental" },
-	{ title: "Libération", year: "2020", desc: "Classical, Modal, Modernism" },
-	{ title: "A Little Groove", year: "2020", desc: "Jazz, Funk, Combo" },
-	{ title: "Impromptu 1", year: "2020", desc: "Classical, Romantism, Piano solo" },
-	{ title: "TEG", year: "2020", desc: "Electroacoustic, Electronic, Mathematics" },
-	{ title: "Pour Lise", year: "2017", desc: "Classical, Orchestral" },
+	// 2026
+	{ title: "Feuille d'érable", year: "2026", instrumentation: "Piano", duration: "0:34" },
+	{ title: "Long hiver", year: "2026", instrumentation: "Piano", duration: "0:49" },
+	// 2025
+	{ title: "Glacial", year: "2025", instrumentation: "Piano", duration: "0:54" },
+	{ title: "Jeu de soleil", year: "2025", instrumentation: "Piano", duration: "0:43" },
+	{ title: "Promenade en forêt", year: "2025", instrumentation: "Piano", duration: "0:36" },
+	{ title: "Tarantelle", year: "2025", instrumentation: "Piano", duration: "1:00" },
+	{ title: "Pensée vagabonde", year: "2025", instrumentation: "Piano", duration: "0:40" },
+	{ title: "Fantaisie québécoise", year: "2025", instrumentation: "Piano", duration: "5:14" },
+	{ title: "La fervente", year: "2025", instrumentation: "Piano", duration: "0:30" },
+	{ title: "Rêverie", year: "2025", instrumentation: "Piano", duration: "0:45" },
+	{ title: "Berceuse", year: "2025", instrumentation: "Voice, flute, violin, guitar, guzheng", duration: "2:34" },
+	{ title: "12 easy canons", year: "2025", instrumentation: "Piano", duration: "4:51" },
+	{ title: "Bliss", year: "2025", instrumentation: "Lead sheet", duration: "0:49" },
+	{ title: "Last Wish", year: "2025", instrumentation: "Lead sheet", duration: "0:52" },
+	{ title: "Forks of Summer", year: "2025", instrumentation: "Lead sheet", duration: "1:27" },
+	{ title: "Sparkles of Time", year: "2025", instrumentation: "Lead sheet", duration: "0:54" },
+	// 2024
+	{ title: "The Final Fanfare", year: "2024", instrumentation: "Three trumpets, two trombones, euphonium, tuba", duration: "2:39" },
+	{ title: "Les nuages au-dessus de l'eau", year: "2024", instrumentation: "Mixed instrumentation (at least two players)", duration: "1:50" },
+	// 2023
+	{ title: "She Wants To Cry", year: "2023", instrumentation: "Electroacoustic", duration: "7:11" },
+	{ title: "Invention en do mineur", year: "2023", instrumentation: "Piano", duration: "1:29" },
+	// 2022
+	{ title: "Rites Nocturnes", year: "2022", instrumentation: "Wind orchestra", duration: "13:32", movements: "Movements 1 & 2" },
+	{ title: "Prelude No. 1", year: "2022", instrumentation: "Piano", duration: "1:55" },
+	{ title: "La Dernière Épreuve", year: "2022", instrumentation: "Symphonic orchestra", duration: "1:33" },
+	{ title: "Aventure et Combats", year: "2022", instrumentation: "Symphonic orchestra", duration: "1:51" },
+	{ title: "L'Île", year: "2022", instrumentation: "Symphonic orchestra", duration: "2:14" },
+	{ title: "Encre d'écorce", year: "2022", instrumentation: "Flute, violin, cello, piano", duration: "2:47" },
+	{ title: "Deuil", year: "2022", instrumentation: "String quintet", duration: "2:21" },
+	{ title: "L'arrivée du train", year: "2022", instrumentation: "String orchestra", duration: "1:27" },
+	{ title: "Duo du Bic", year: "2022", instrumentation: "Viola, cello", duration: "2:36" },
+	{ title: "Sorcellerie", year: "2022", instrumentation: "Symphonic orchestra", duration: "1:55" },
+	{ title: "String Quintet No. 1", year: "2022", instrumentation: "Two violins, viola, cello, double bass", duration: "2:03" },
+	// 2021
+	{ title: "Marche en Nouvelle Terre", year: "2021", instrumentation: "Symphonic orchestra", duration: "0:54" },
+	{ title: "Avancement", year: "2021", instrumentation: "Wind orchestra", duration: "1:22" },
+	{ title: "Concertino for snare drum, bass drum and marimba", year: "2021", instrumentation: "Wind orchestra", duration: "4:01", movements: "Movement 1" },
+	{ title: "Piano Concerto No. 4", year: "2021", instrumentation: "Piano, symphonic orchestra", duration: "6:50", movements: "Movement 1" },
+	{ title: "Morts inquiets", year: "2021", instrumentation: "SATB + piano", duration: "4:34" },
+	{ title: "Menus Félins", year: "2021", instrumentation: "SATB + piano", duration: "4:57", movements: "Movements 1 & 2" },
+	{ title: "Une autre tombe", year: "2021", instrumentation: "Piano, voice", duration: "2:40" },
+	{ title: "Trio Sonata", year: "2021", instrumentation: "Flute, violin, continuo", duration: "2:07", movements: "Movement 1" },
+	// 2020
+	{ title: "TEG", year: "2020", instrumentation: "Electroacoustic", duration: "3:40" },
+	{ title: "Libération", year: "2020", instrumentation: "Piano, flute", duration: "2:19" },
+	{ title: "Impromptu Nº 1", year: "2020", instrumentation: "Piano", duration: "1:40" },
+	{ title: "Scherzo Nº 2", year: "2020", instrumentation: "Piano", duration: "6:19" },
+	{ title: "Adagio pour flûte et piano", year: "2020", instrumentation: "Piano, flute", duration: "2:56" },
+	{ title: "Esperluète", year: "2020", instrumentation: "Flute, B♭ clarinet, violin, cello, timpani", duration: "1:13" },
+	{ title: "A Little Groove", year: "2020", instrumentation: "Trumpet, alto saxophone, tenor saxophone, baritone saxophone, tenor trombone, piano, electric guitar, bass guitar, drum kit", duration: "2:19" },
+	{ title: "La pensée d'une vie", year: "2020", instrumentation: "String quartet", duration: "2:42" },
+	{ title: "Sonatina classica", year: "2020", instrumentation: "Piano", duration: "3:06", movements: "Movement 1" },
+	{ title: "Allemande & Corrente", year: "2020", instrumentation: "Flute, violin, continuo", duration: "3:51" },
+	{ title: "Parade fantasque", year: "2020", instrumentation: "B♭ clarinet, cello", duration: "2:05" },
+	{ title: "Pour un autre temps", year: "2020", instrumentation: "Classical guitar", duration: "4:27" },
+	// 2019
+	{ title: "Brass Quintet No. 1", year: "2019", instrumentation: "Two trumpets, French horn, trombone, tuba", duration: "3:10" },
+	{ title: "Appartrio", year: "2019", instrumentation: "Three flutes", duration: "6:14", movements: "Movements 1 & 2" },
+	{ title: "March for flute and piano", year: "2019", instrumentation: "Piano, flute", duration: "1:45" },
+	{ title: "Suite for piano", year: "2019", instrumentation: "Piano", duration: "1:36", movements: "Movement 1" },
+	// 2018
+	{ title: "Toccata", year: "2018", instrumentation: "Harpsichord/piano", duration: "2:16" },
+	{ title: "Three movements for flute and piano", year: "2018", instrumentation: "Piano, flute", duration: "2:55" },
+	// 2017
+	{ title: "For Lise", year: "2017", instrumentation: "Symphonic orchestra", duration: "1:52" },
+	// 2015
+	{ title: "Au cœur des ténèbres", year: "2015", instrumentation: "Two flutes, oboe, French horn, bassoon, cello, piano", duration: "1:37" },
+	// 2014
+	{ title: "Moments musicaux", year: "2014", instrumentation: "Piano, flute", duration: "1:06" },
+	// 2013
+	{ title: "Brindille", year: "2013", instrumentation: "Two flutes", duration: "0:33" },
+	{ title: "Course", year: "2013", instrumentation: "Bassoon, euphonium", duration: "0:52" },
+	// 2013–2014
+	{ title: "Pris", year: "2013–2014", instrumentation: "Harpsichord, recorder", duration: "2:57" },
 ];
+
+// Group by year (already sorted most recent first)
+const compositionsByYear = [];
+let currentYear = null;
+let currentGroup = null;
+for (const c of compositions) {
+	if (c.year !== currentYear) {
+		currentYear = c.year;
+		currentGroup = { year: c.year, works: [] };
+		compositionsByYear.push(currentGroup);
+	}
+	currentGroup.works.push(c);
+}
 
 const concerts = [
 	{ day: "15", month: "Nov", title: "Piano Recital — Original Works", venue: "Salle Claude-Champagne, Montréal" },
@@ -84,19 +166,34 @@ const discography = [
 
 					<div id="works" class="portfolio__section">
 						<h2 class="portfolio__section-title">Works / Compositions</h2>
-						<p class="portfolio__section-desc">A selection of original works for piano, ensemble, and chamber music.</p>
-						<div class="cards-grid">
-							{compositions.map((work) => (
-								<article class="card">
-									<div class="card__image">
-										<img src="/images/composition-placeholder.jpg" alt={work.title} loading="lazy" />
-									</div>
-									<div class="card__body">
-										<h3 class="card__title">{work.title}</h3>
-										<p class="card__meta">{work.year}</p>
-										<p class="card__desc" set:html={work.desc} />
-									</div>
-								</article>
+						<p class="portfolio__section-desc">Complete catalogue of original works — {compositions.length} compositions (2013–2026).</p>
+
+						<div class="works-catalogue">
+							{compositionsByYear.map((group) => (
+								<div class="works-year-group">
+									<h3 class="works-year">{group.year}</h3>
+									<table class="works-table">
+										<thead>
+											<tr>
+												<th>Title</th>
+												<th class="works-table__inst">Instrumentation</th>
+												<th class="works-table__dur">Duration</th>
+											</tr>
+										</thead>
+										<tbody>
+											{group.works.map((work) => (
+												<tr>
+													<td class="works-table__title">
+														{work.title}
+														{work.movements && <span class="works-table__mvt">{work.movements}</span>}
+													</td>
+													<td class="works-table__inst">{work.instrumentation}</td>
+													<td class="works-table__dur">{work.duration}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
 							))}
 						</div>
 					</div>
@@ -151,6 +248,137 @@ const discography = [
 		<Footer />
 	</body>
 </html>
+
+<style>
+	/* === Works catalogue === */
+	.works-catalogue {
+		margin-top: 2rem;
+	}
+
+	.works-year-group {
+		margin-bottom: 3rem;
+	}
+
+	.works-year {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: 1.6rem;
+		color: var(--color-accent, #6b5b4a);
+		margin-bottom: 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--color-border, #e5e0d8);
+	}
+
+	.works-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.95rem;
+	}
+
+	.works-table thead th {
+		font-family: var(--font-sans, sans-serif);
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-text-muted, #888);
+		font-weight: 400;
+		text-align: left;
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid var(--color-border, #e5e0d8);
+	}
+
+	.works-table tbody tr {
+		border-bottom: 1px solid var(--color-border, #e5e0d8);
+		transition: background-color 0.2s ease;
+	}
+
+	.works-table tbody tr:hover {
+		background-color: rgba(107, 91, 74, 0.04);
+	}
+
+	.works-table td {
+		padding: 1rem;
+		vertical-align: top;
+		line-height: 1.5;
+	}
+
+	.works-table__title {
+		font-family: var(--font-serif, Georgia, serif);
+		font-size: 1.05rem;
+		color: var(--color-text, #1a1a1a);
+		white-space: nowrap;
+	}
+
+	.works-table__mvt {
+		display: block;
+		font-family: var(--font-sans, sans-serif);
+		font-size: 0.8rem;
+		font-style: italic;
+		color: var(--color-text-muted, #888);
+		margin-top: 0.15rem;
+	}
+
+	.works-table__inst {
+		color: var(--color-text-soft, #555);
+		font-size: 0.9rem;
+	}
+
+	.works-table__dur {
+		color: var(--color-text-muted, #888);
+		font-size: 0.9rem;
+		white-space: nowrap;
+		text-align: right;
+	}
+
+	/* Responsive */
+	@media (max-width: 700px) {
+		.works-table thead {
+			display: none;
+		}
+
+		.works-table,
+		.works-table tbody,
+		.works-table tr,
+		.works-table td {
+			display: block;
+			width: 100%;
+		}
+
+		.works-table tr {
+			padding: 1rem 0;
+			border-bottom: 1px solid var(--color-border, #e5e0d8);
+		}
+
+		.works-table td {
+			padding: 0.15rem 0;
+			border: none;
+		}
+
+		.works-table__title {
+			font-size: 1.1rem;
+			white-space: normal;
+		}
+
+		.works-table__inst::before {
+			content: 'Instrumentation: ';
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: var(--color-text-muted, #888);
+		}
+
+		.works-table__dur {
+			text-align: left;
+		}
+
+		.works-table__dur::before {
+			content: 'Duration: ';
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: var(--color-text-muted, #888);
+		}
+	}
+</style>
 
 <script>
 	const tabs = document.querySelectorAll('.portfolio__tab');
