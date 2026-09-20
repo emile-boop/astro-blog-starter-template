@@ -110,6 +110,7 @@ const discography = [
 		title: "Ikolia",
 		year: "2022",
 		type: "Bande sonore originale",
+		cover: "/images/ikolia.png",
 		desc: "Bande sonore originale du jeu vidéo Ikolia.",
 		tracks: [
 			{ name: "L'Île", duration: "2:14" },
@@ -121,6 +122,7 @@ const discography = [
 		title: "Rites Nocturnes",
 		year: "2022",
 		type: "Production indépendante",
+		cover: "/images/ritesnocturnes.png",
 		desc: "Deux mouvements pour orchestre à vent. Une suite endiablée dans un univers fantaisiste sombre.",
 		tracks: [
 			{ name: "Ouverture", duration: "7:09" },
@@ -131,6 +133,7 @@ const discography = [
 		title: "Soft Jazz",
 		year: "2025",
 		type: "Production indépendante",
+		cover: "/images/softjazz.png",
 		desc: "1er album jazz.",
 		tracks: [
 			{ name: "Bliss", duration: "0:49" },
@@ -143,6 +146,7 @@ const discography = [
 		title: "TEG",
 		year: "2020",
 		type: "Single",
+		cover: "/images/teg.png",
 		desc: "Single. Composition originale basée sur une œuvre visuelle d'Etienne Saint-Amant.",
 		tracks: [
 			{ name: "TEG", duration: "" },
@@ -234,7 +238,7 @@ const discography = [
 						{discography.map((album) => (
 							<div class="discography-item">
 								<div class="discography-item__cover">
-									<img src="/images/album-placeholder.jpg" alt={album.title} loading="lazy" />
+									<img src={album.cover} alt={album.title} loading="lazy" />
 								</div>
 								<div class="discography-item__info">
 									<h3>{album.title}</h3>
