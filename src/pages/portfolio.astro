@@ -107,35 +107,45 @@ const concerts = [
 
 const discography = [
 	{
-		title: "Autumn Preludes",
-		year: "2024",
-		desc: "A collection of preludes for solo piano, recorded in studio.",
-		tracks: [
-			{ name: "Prelude No. 1 — Leaves", duration: "3:42" },
-			{ name: "Prelude No. 2 — Mist", duration: "4:15" },
-			{ name: "Prelude No. 3 — First Snow", duration: "5:08" },
-			{ name: "Prelude No. 4 — Twilight", duration: "3:56" },
-		],
-	},
-	{
-		title: "Études-tableaux",
-		year: "2023",
-		desc: "Six études for piano, an exploration of expressive virtuosity.",
-		tracks: [
-			{ name: "Étude No. 1 — Allegro", duration: "4:20" },
-			{ name: "Étude No. 2 — Andante", duration: "5:33" },
-			{ name: "Étude No. 3 — Presto", duration: "3:18" },
-			{ name: "Étude No. 4 — Largo", duration: "6:45" },
-		],
-	},
-	{
-		title: "Sonata for Violin and Piano",
+		title: "Ikolia",
 		year: "2022",
-		desc: "Sonata in three movements, recorded with guest violinist.",
+		type: "Original Soundtrack",
+		desc: "Original soundtrack for the video game Ikolia.",
 		tracks: [
-			{ name: "I. Allegro moderato", duration: "8:12" },
-			{ name: "II. Andante", duration: "6:30" },
-			{ name: "III. Allegro vivace", duration: "7:45" },
+			{ name: "L'Île", duration: "2:14" },
+			{ name: "Aventure et Combats", duration: "1:50" },
+			{ name: "La Dernière Épreuve", duration: "1:33" },
+		],
+	},
+	{
+		title: "Rites Nocturnes",
+		year: "2022",
+		type: "Independent Production",
+		desc: "Two movements for wind ensemble. A lively suite in a dark fantasy world.",
+		tracks: [
+			{ name: "Ouverture", duration: "7:09" },
+			{ name: "Anémoi", duration: "6:23" },
+		],
+	},
+	{
+		title: "Soft Jazz",
+		year: "2025",
+		type: "Independent Production",
+		desc: "First jazz album.",
+		tracks: [
+			{ name: "Bliss", duration: "0:49" },
+			{ name: "Last Wish", duration: "0:52" },
+			{ name: "Forks of Summer", duration: "1:27" },
+			{ name: "Sparkles of Time", duration: "0:54" },
+		],
+	},
+	{
+		title: "TEG",
+		year: "2020",
+		type: "Single",
+		desc: "Original composition based on a visual artwork by Étienne Saint-Amant.",
+		tracks: [
+			{ name: "TEG", duration: "" },
 		],
 	},
 ];
@@ -198,7 +208,7 @@ const discography = [
 						</div>
 					</div>
 
-									<div id="concerts" class="portfolio__section">
+				<div id="concerts" class="portfolio__section">
 					<h2 class="portfolio__section-title">Concerts / Events</h2>
 					<p class="portfolio__section-desc">Past performances and events.</p>
 					<ul class="concerts-list">
@@ -218,8 +228,8 @@ const discography = [
 				</div>
 
 					<div id="recordings" class="portfolio__section">
-						<h2 class="portfolio__section-title">Discography / Recordings</h2>
-						<p class="portfolio__section-desc">Albums and projects recorded in studio.</p>
+						<h2 class="portfolio__section-title">Recordings</h2>
+						<p class="portfolio__section-desc">Studio recordings and independent productions.</p>
 						{discography.map((album) => (
 							<div class="discography-item">
 								<div class="discography-item__cover">
@@ -227,13 +237,13 @@ const discography = [
 								</div>
 								<div class="discography-item__info">
 									<h3>{album.title}</h3>
-									<p class="discography-item__year">{album.year}</p>
+									<p class="discography-item__year">{album.year} · {album.type}</p>
 									<p>{album.desc}</p>
 									<ul class="discography-item__tracks">
 										{album.tracks.map((track, i) => (
 											<li>
 												<span><span class="track-number">{String(i + 1).padStart(2, '0')}.</span> {track.name}</span>
-												<span>{track.duration}</span>
+												{track.duration && <span>{track.duration}</span>}
 											</li>
 										))}
 									</ul>
