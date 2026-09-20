@@ -97,12 +97,12 @@ for (const c of compositions) {
 }
 
 const concerts = [
-	{ year: "2025", title: "Cycles", role: "Contemporary classical concert", venue: "Maureen Forrester Recital Hall" },
-	{ year: "2025–2026", title: "Laurier Choirs Concert", role: "Collaborative pianist", venue: "Maureen Forrester Recital Hall" },
-	{ year: "2025", title: "All That Worldly Jazz Festival", role: "Piano solo performance", venue: "St. Jacobs Village" },
-	{ year: "2025", title: "Keeper of Songs and Secrets", role: "Contemporary performance", venue: "Crawford Lake Conservation Area" },
-	{ year: "2025", title: "Prometheus", role: "Multi-disciplinary concert", venue: "Maureen Forrester Recital Hall" },
-	{ year: "2025", title: "Of Mothers and Daughters", role: "NUMUS concert", venue: "Kitchener-Waterloo Little Theatre" },
+	{ year: "2025", title: "Cycles", role: "Concert de musique classique contemporaine", venue: "Maureen Forrester Recital Hall" },
+	{ year: "2025–2026", title: "Concert des chœurs de Laurier", role: "Pianiste accompagnateur", venue: "Maureen Forrester Recital Hall" },
+	{ year: "2025", title: "All That Worldly Jazz Festival", role: "Interprétation en piano solo", venue: "St. Jacobs Village" },
+	{ year: "2025", title: "Keeper of Songs and Secrets", role: "Interprétation contemporaine", venue: "Crawford Lake Conservation Area" },
+	{ year: "2025", title: "Prometheus", role: "Concert multidisciplinaire", venue: "Maureen Forrester Recital Hall" },
+	{ year: "2025", title: "Of Mothers and Daughters", role: "Concert NUMUS", venue: "Kitchener-Waterloo Little Theatre" },
 ];
 
 const discography = [
@@ -198,20 +198,21 @@ const discography = [
 						</div>
 					</div>
 
-				<div id="concerts" class="portfolio__section">
-					<h2 class="portfolio__section-title">Concerts / Events</h2>
-					<p class="portfolio__section-desc">Past performances and events.</p>
+							<div id="concerts" class="portfolio__section">
+					<h2 class="portfolio__section-title">Concerts / Événements</h2>
+					<p class="portfolio__section-desc">Prochaines représentations et événements à venir.</p>
 					<ul class="concerts-list">
 						{concerts.map((concert) => (
 							<li class="concert-item">
 								<div class="concert-item__date">
-									<span class="concert-item__date-year">{concert.year}</span>
+									<span class="concert-item__date-day">{concert.day}</span>
+									<span class="concert-item__date-month">{concert.month}</span>
 								</div>
 								<div class="concert-item__details">
 									<h3>{concert.title}</h3>
-									<p class="concert-item__role">{concert.role}</p>
 									<p class="concert-item__venue">{concert.venue}</p>
 								</div>
+								<a href="/fr/contact" class="concert-item__link">Réserver →</a>
 							</li>
 						))}
 					</ul>
