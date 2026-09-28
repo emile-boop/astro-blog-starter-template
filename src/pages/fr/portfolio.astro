@@ -113,9 +113,9 @@ const discography = [
 		cover: "/images/ikolia.png",
 		desc: "Bande sonore originale du jeu vidéo Ikolia.",
 		tracks: [
-			{ name: "L'Île", duration: "2:14" },
-			{ name: "Aventure et Combats", duration: "1:50" },
-			{ name: "La Dernière Épreuve", duration: "1:33" },
+			{ name: "L'Île", duration: "2:14", url: "https://youtu.be/blQHkw8qgYU" },
+			{ name: "Aventure et Combats", duration: "1:50", url: "https://youtu.be/J8WBjws65ZE" },
+			{ name: "La Dernière Épreuve", duration: "1:33", url: "https://youtu.be/GmaTmzJtzoY" },
 		],
 	},
 	{
@@ -125,8 +125,8 @@ const discography = [
 		cover: "/images/ritesnocturnes.png",
 		desc: "Deux mouvements pour orchestre à vent. Une suite endiablée dans un univers fantaisiste sombre.",
 		tracks: [
-			{ name: "Ouverture", duration: "7:09" },
-			{ name: "Anémoi", duration: "6:23" },
+			{ name: "Ouverture", duration: "7:09", url: "https://youtu.be/BQhGfwDHBEA" },
+			{ name: "Anémoi", duration: "6:23", url: "https://youtu.be/wn6jVwKu_HM" },
 		],
 	},
 	{
@@ -149,7 +149,7 @@ const discography = [
 		cover: "/images/teg.png",
 		desc: "Composition originale basée sur une œuvre visuelle d'Etienne Saint-Amant.",
 		tracks: [
-			{ name: "TEG", duration: "" },
+			{ name: "TEG", duration: "", url: "https://youtu.be/LBUG93PJlpg" },
 		],
 	},
 ];
@@ -247,7 +247,7 @@ const discography = [
 									<ul class="discography-item__tracks">
 										{album.tracks.map((track, i) => (
 											<li>
-												<span><span class="track-number">{String(i + 1).padStart(2, '0')}.</span> {track.name}</span>
+												<span><span class="track-number">{String(i + 1).padStart(2, '0')}.</span> {track.url ? <a href={track.url} target="_blank" rel="noopener" class="track-link">{track.name}</a> : track.name}</span>
 												{track.duration && <span>{track.duration}</span>}
 											</li>
 										))}
@@ -399,6 +399,16 @@ const discography = [
 			letter-spacing: 0.05em;
 			color: var(--color-text-muted, #888);
 		}
+	}
+	.track-link {
+		color: var(--color-accent, #6b5b4a);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--color-accent, #6b5b4a);
+		transition: color 0.2s ease;
+	}
+	.track-link:hover {
+		color: var(--color-text, #1a1a1a);
+		border-bottom-style: solid;
 	}
 </style>
 
