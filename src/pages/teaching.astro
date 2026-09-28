@@ -4,9 +4,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const offerings = [
-	{ icon: "♪", title: "Individual Piano Lessons", desc: "All levels, from beginner to advanced. Personalized approach." },
-	{ icon: "♫", title: "Composition Workshops", desc: "Introduction and refinement of musical writing." },
-	{ icon: "♬", title: "Performance Coaching", desc: "Preparation for competitions, exams, and recitals." },
+	{ icon: "♪", title: "Individual Lessons", desc: "Piano, flute, and recorder." },
+	{ icon: "♫", title: "Composition & Theory", desc: "Musical writing, analysis, orchestration, counterpoint, and electroacoustics." },
+	{ icon: "♬", title: "Exam Preparation", desc: "Preparation for RCM examinations. Solfeggio, history, and musicology." },
 	{ icon: "♩", title: "Online Lessons", desc: "Video conference sessions, flexible and accessible." },
 ];
 ---
@@ -31,15 +31,17 @@ const offerings = [
 					<div class="teaching">
 						<div class="teaching__info">
 							<p>
-								Teaching holds an essential place in my musical life. After
-								more than fifteen years of practice and performance, I now
-								share my experience with students of all ages and levels.
+								Teaching has always been a natural extension of my musical
+								life. From my early years at the piano to my work as a
+								teaching assistant at the University of Sherbrooke and Wilfrid
+								Laurier University, I have guided students of all ages and
+								levels.
 							</p>
 							<p>
-								My pedagogical approach emphasizes listening, patience, and
-								the joy of playing. Every student is unique — I adapt my method
-								to your goals, whether you are discovering the piano,
-								refining your technique, or preparing for a recital.
+								My approach emphasizes listening, patience, and the joy of
+								playing. Every student is unique, and I adapt my method to
+								your goals, whether you are discovering music for the first
+								time or refining your craft.
 							</p>
 
 							<ul class="teaching__offerings">
@@ -53,6 +55,12 @@ const offerings = [
 									</li>
 								))}
 							</ul>
+
+							<p style="font-size: 0.95rem; color: var(--color-muted); margin-top: 1.5rem; font-style: italic;">
+								Repertoire specialties: baroque, classical, romantic, modern,
+								jazz, and contemporary, including atonal, extended techniques,
+								and experimental music.
+							</p>
 
 							<a href="/contact" class="btn">Contact me</a>
 						</div>
