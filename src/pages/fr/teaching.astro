@@ -4,9 +4,9 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
 const offerings = [
-	{ icon: "♪", title: "Cours de piano individuels", desc: "Tous niveaux, du débutant à l'avancé. Approche personnalisée." },
-	{ icon: "♫", title: "Ateliers de composition", desc: "Initiation et perfectionnement à l'écriture musicale." },
-	{ icon: "♬", title: "Coaching d'interprétation", desc: "Préparation aux concours, examens et récitals." },
+	{ icon: "♪", title: "Cours individuels", desc: "Piano, flûte et flûte à bec." },
+	{ icon: "♫", title: "Composition et théorie", desc: "Écriture musicale, analyse, orchestration, contrepoint et électroacoustique." },
+	{ icon: "♬", title: "Préparation aux examens", desc: "Préparation aux examens du RCM. Solfège, histoire et musicologie." },
 	{ icon: "♩", title: "Cours en ligne", desc: "Sessions par visioconférence, flexibles et accessibles." },
 ];
 ---
@@ -31,16 +31,17 @@ const offerings = [
 					<div class="teaching">
 						<div class="teaching__info">
 							<p>
-								L'enseignement occupe une place essentielle dans ma vie
-								musicale. Après plus de quinze ans de pratique et de scène,
-								je partage aujourd'hui mon expérience avec des élèves de tous
-								âges et de tous niveaux.
+								L'enseignement a toujours été un prolongement naturel de ma
+								vie musicale. De mes premières années au piano à mon travail
+								comme assistant d'enseignement à l'Université de Sherbrooke
+								et à l'Université Wilfrid Laurier, j'ai accompagné des élèves
+								de tous âges et de tous niveaux.
 							</p>
 							<p>
-								Mon approche pédagogique privilégie l'écoute, la patience et
-								le plaisir de jouer. Chaque élève est unique — j'adapte ma
-								méthode à vos objectifs, qu'il s'agisse de découvrir le piano,
-								de perfectionner votre technique ou de préparer un récital.
+								Mon approche privilégie l'écoute, la patience et le plaisir de
+								jouer. Chaque élève est unique, et j'adapte ma méthode à vos
+								objectifs, qu'il s'agisse de découvrir la musique pour la
+								première fois ou de perfectionner votre jeu.
 							</p>
 
 							<ul class="teaching__offerings">
@@ -54,6 +55,12 @@ const offerings = [
 									</li>
 								))}
 							</ul>
+
+							<p style="font-size: 0.95rem; color: var(--color-muted); margin-top: 1.5rem; font-style: italic;">
+								Spécialités du répertoire : baroque, classique, romantique,
+								moderne, jazz et contemporain, incluant atonal, techniques
+								étendues et musique expérimentale.
+							</p>
 
 							<a href="/fr/contact" class="btn">Me contacter</a>
 						</div>
