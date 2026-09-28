@@ -597,11 +597,12 @@ nav h2 a:hover {
 }
 
 .teaching__offerings li {
-	padding: 1rem 0;
-	border-bottom: 1px solid var(--color-border);
-	display: flex;
-	align-items: baseline;
-	gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: start;
+  gap: 1rem;
 }
 
 .teaching__offering-icon {
