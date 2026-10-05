@@ -13,7 +13,7 @@ const {
 	image = "/default-og-image.png",
 } = Astro.props;
 
-const canonical = "https://emilesavoie.com";
+const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie.com').toString();
 ---
 
 <!-- Global Metadata -->
