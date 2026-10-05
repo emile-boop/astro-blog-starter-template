@@ -56,6 +56,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={image} />
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W643R8NPXF" is:inline></script>
+<script is:inline>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-W643R8NPXF');
+</script>
+
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json" is:inline>
 {
@@ -64,7 +73,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie
 	"name": "Émile Savoie",
 	"jobTitle": "Pianist and Composer",
 	"url": "https://emilesavoie.com",
-	"image": "https://emilesavoie.com/images/emilesavoie.jpg",
+	"image": "https://emilesavoie.com/images/emilesavoie.webp",
 	"sameAs": [
 		"https://www.youtube.com/@emile4433"
 	]
