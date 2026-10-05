@@ -214,25 +214,24 @@ const discography = [
 						</div>
 					</div>
 
-							<div id="concerts" class="portfolio__section">
-					<h2 class="portfolio__section-title">Concerts / Événements</h2>
-					<p class="portfolio__section-desc">Représentations et événements passés.</p>
-					<ul class="concerts-list">
-						{concerts.map((concert) => (
-							<li class="concert-item">
-								<div class="concert-item__date">
-									<span class="concert-item__date-day">{concert.day}</span>
-									<span class="concert-item__date-month">{concert.month}</span>
-								</div>
-								<div class="concert-item__details">
-									<h3>{concert.title}</h3>
-									<p class="concert-item__venue">{concert.venue}</p>
-								</div>
-								<a href="/fr/contact" class="concert-item__link">Réserver →</a>
-							</li>
-						))}
-					</ul>
-				</div>
+			<div id="concerts" class="portfolio__section">
+				<h2 class="portfolio__section-title">Concerts / Événements</h2>
+				<p class="portfolio__section-desc">Interprétations et événements passés.</p>
+				<ul class="concerts-list">
+					{concerts.map((concert) => (
+						<li class="concert-item">
+							<div class="concert-item__date">
+								<span class="concert-item__date-year">{concert.year}</span>
+							</div>
+							<div class="concert-item__details">
+								<h3>{concert.title}</h3>
+								<p class="concert-item__role">{concert.role}</p>
+								<p class="concert-item__venue">{concert.venue}</p>
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
 
 					<div id="enregistrements" class="portfolio__section">
 						<h2 class="portfolio__section-title">Enregistrements</h2>
