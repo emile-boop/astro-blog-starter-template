@@ -1,0 +1,27 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Page Not Found — Émile Savoie" description="The page you are looking for could not be found." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="section" style="text-align: center; padding-top: 12rem;">
+				<div class="container-narrow">
+					<h1 style="font-size: 3rem; margin-bottom: 1rem;">404</h1>
+					<p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 2.5rem;">
+						The page you are looking for could not be found.
+					</p>
+					<a href="/" class="btn">Return home</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
