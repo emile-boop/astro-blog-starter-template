@@ -1,0 +1,27 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title="Page introuvable — Émile Savoie" description="La page que vous recherchez est introuvable." />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="section" style="text-align: center; padding-top: 12rem;">
+				<div class="container-narrow">
+					<h1 style="font-size: 3rem; margin-bottom: 1rem;">404</h1>
+					<p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 2.5rem;">
+						La page que vous recherchez est introuvable.
+					</p>
+					<a href="/fr/" class="btn">Retour à l'accueil</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
