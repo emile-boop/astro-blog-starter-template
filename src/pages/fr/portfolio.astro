@@ -263,7 +263,28 @@ const discography = [
 			</section>
 		</main>
 		<Footer />
-	</body>
+		<!-- Structured Data: Music -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@graph": [
+			...discography.map(album => ({
+				"@type": "MusicAlbum",
+				"name": album.title,
+				"byArtist": {"@type": "Person", "name": "Émile Savoie"},
+				"datePublished": album.year,
+				"image": "https://emilesavoie.com" + album.cover,
+				"track": album.tracks.map(t => ({"@type": "MusicRecording", "name": t.name, "url": t.url || undefined}))
+			})),
+			...compositions.map(work => ({
+				"@type": "MusicComposition",
+				"name": work.title,
+				"composer": {"@type": "Person", "name": "Émile Savoie"},
+				"dateCreated": work.year,
+				"instrumentation": work.instrumentation
+			}))
+		]
+	})} />
+</body>
 </html>
 
 <style>
