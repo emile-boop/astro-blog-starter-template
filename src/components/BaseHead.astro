@@ -14,10 +14,6 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie.com').toString();
-<!-- Hreflang -->
-<link rel="alternate" hreflang="en" href="https://emilesavoie.com/" />
-<link rel="alternate" hreflang="fr" href="https://emilesavoie.com/fr/" />
-<link rel="alternate" hreflang="x-default" href="https://emilesavoie.com/" />
 ---
 
 <!-- Global Metadata -->
@@ -36,10 +32,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie
 />
 
 <!-- SEO Meta Tags -->
-<title>{title}</title>
+<title>{title} — Émile Savoie</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+
+<!-- Hreflang (bilingual) -->
+<link rel="alternate" hreflang="en" href="https://emilesavoie.com/" />
+<link rel="alternate" hreflang="fr" href="https://emilesavoie.com/fr/" />
+<link rel="alternate" hreflang="x-default" href="https://emilesavoie.com/" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
@@ -52,3 +53,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site || 'https://emilesavoie
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json" set:html={JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "Person",
+	"name": "Émile Savoie",
+	"jobTitle": "Pianist & Composer",
+	"url": "https://emilesavoie.com",
+	"image": "https://emilesavoie.com/images/emilesavoie.jpg",
+	"sameAs": [
+		"https://www.youtube.com/@emile4433"
+	]
+})} />
