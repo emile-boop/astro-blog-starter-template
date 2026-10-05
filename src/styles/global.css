@@ -1,3 +1,64 @@
+/* === Cormorant Garamond (local) === */
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("/fonts/cormorant-garamond-v21-latin_latin-ext-regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("/fonts/cormorant-garamond-v21-latin_latin-ext-italic.woff2") format("woff2");
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("/fonts/cormorant-garamond-v21-latin_latin-ext-500.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("/fonts/cormorant-garamond-v21-latin_latin-ext-500italic.woff2") format("woff2");
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("/fonts/cormorant-garamond-v21-latin_latin-ext-600.woff2") format("woff2");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* === Jost (local) === */
+@font-face {
+	font-family: "Jost";
+	src: url("/fonts/jost-v20-latin_latin-ext-300.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Jost";
+	src: url("/fonts/jost-v20-latin_latin-ext-regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Jost";
+	src: url("/fonts/jost-v20-latin_latin-ext-500.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* === Bodoni (local) === */
 @font-face {
 	font-family: "Bodoni";
 	src: url("/fonts/bodoni.ttf") format("truetype");
@@ -5,6 +66,8 @@
 	font-style: normal;
 	font-display: swap;
 }
+
+/* === GillSans (local) === */
 @font-face {
 	font-family: "GillSans";
 	src: url("/fonts/gillsans.ttf") format("truetype");
