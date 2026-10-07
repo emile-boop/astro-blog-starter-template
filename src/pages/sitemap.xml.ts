@@ -1,25 +1,33 @@
----
-const site = Astro.site?.toString() ?? 'https://emilesavoie.com/';
+import type { APIRoute } from 'astro';
 
-const pages = [
-  { url: '', priority: 1.0 },
-  { url: 'about', priority: 0.8 },
-  { url: 'biography', priority: 0.8 },
-  { url: 'portfolio', priority: 0.9 },
-  { url: 'teaching', priority: 0.8 },
-  { url: 'contact', priority: 0.7 },
-  { url: 'fr/biography', priority: 0.8 },
-  { url: 'fr/portfolio', priority: 0.9 },
-];
+export const GET: APIRoute = async ({ site }) => {
+  const pages = [
+    '',
+    'portfolio',
+    'biography',
+    'teaching',
+    'blog',
+    'fr',
+    'fr/portfolio',
+    'fr/biography',
+    'fr/teaching',
+    'fr/blog',
+  ];
 
-const lastmod = new Date().toISOString();
----
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {pages.map((page) => (
-    <url>
-      <loc>{site}{page.url}</loc>
-      <lastmod>{lastmod}</lastmod>
-      <priority>{page.priority}</priority>
-    </url>
-  ))}
-</urlset>
+  const lastmod = new Date().toISOString();
+
+  const urls = pages
+    .map(
+      (page) =>
+        `  <url>\n    <loc>${site}/${page}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
+    )
+    .join('\n');
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
+
+  return new Response(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+    },
+  });
+};
