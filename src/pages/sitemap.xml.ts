@@ -15,11 +15,12 @@ export const GET: APIRoute = async ({ site }) => {
   ];
 
   const lastmod = new Date().toISOString();
+  const origin = site?.origin ?? 'https://emilesavoie.com';
 
   const urls = pages
     .map(
       (page) =>
-        `  <url>\n    <loc>${site}/${page}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
+        `  <url>\n    <loc>${origin}/${page}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
     )
     .join('\n');
 
