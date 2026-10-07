@@ -1,35 +1,46 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 
-const pages = [
-  { url: '/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '1.0' },
-  { url: '/biography', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/portfolio', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
-  { url: '/teaching', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/contact', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
-  { url: '/fr', lastmod: '2026-10-07', changefreq: 'monthly', priority: '1.0' },
-  { url: '/fr/biography', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/fr/portfolio', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
-  { url: '/fr/teaching', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/fr/contact', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
-];
+export const GET: APIRoute = async ({ site }) => {
+  const baseUrl = site?.toString().replace(/\/$/, '') ?? 'https://emilesavoie.com';
+  
+  // Vos pages statiques sans barre oblique
+  const staticPages = [
+    '',
+    '/biography',
+    '/portfolio',
+    '/teaching',
+    '/contact',
+    '/fr',
+    '/fr/biography',
+    '/fr/portfolio',
+    '/fr/teaching',
+    '/fr/contact',
+  ];
 
-export const GET: APIRoute = ({ site }) => {
-  const baseUrl = site?.toString().replace(/\/$/, '') || 'https://emilesavoie.com';
-  const body = `<?xml version="1.0" encoding="UTF-8"?>
+  const urls = staticPages.map(path => ({
+    url: `${baseUrl}${path}`,
+    lastmod: new Date().toISOString(),
+  }));
+
+  // Ajoutez vos articles de blog si applicable
+  const posts = await getCollection('blog');
+  for (const post of posts) {
+    urls.push({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastmod: post.data.updatedDate?.toISOString() ?? post.data.date.toISOString(),
+    });
+  }
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages
-  .map(
-    (page) => `  <url>
-    <loc>${baseUrl}${page.url}</loc>
-    <lastmod>${page.lastmod}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>`
-  )
-  .join('\n')}
+${urls.map(u => `  <url>
+    <loc>${u.url}</loc>
+    <lastmod>${u.lastmod}</lastmod>
+  </url>`).join('\n')}
 </urlset>`;
 
-  return new Response(body, {
-    headers: { 'Content-Type': 'application/xml' },
+  return new Response(sitemap, {
+    headers: { 'Content-Type': 'application/xml' }
   });
 };
