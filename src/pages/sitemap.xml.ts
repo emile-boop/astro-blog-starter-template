@@ -2,15 +2,15 @@ import type { APIRoute } from 'astro';
 
 const pages = [
   { url: '/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '1.0' },
-  { url: '/biography/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/portfolio/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
-  { url: '/teaching/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/contact/', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
-  { url: '/fr/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '1.0' },
-  { url: '/fr/biography/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/fr/portfolio/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
-  { url: '/fr/teaching/', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
-  { url: '/fr/contact/', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
+  { url: '/biography', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
+  { url: '/portfolio', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
+  { url: '/teaching', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
+  { url: '/contact', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
+  { url: '/fr', lastmod: '2026-10-07', changefreq: 'monthly', priority: '1.0' },
+  { url: '/fr/biography', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
+  { url: '/fr/portfolio', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.9' },
+  { url: '/fr/teaching', lastmod: '2026-10-07', changefreq: 'monthly', priority: '0.8' },
+  { url: '/fr/contact', lastmod: '2026-10-07', changefreq: 'yearly', priority: '0.7' },
 ];
 
 export const GET: APIRoute = ({ site }) => {
