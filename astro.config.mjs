@@ -9,12 +9,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
 	site: "https://emilesavoie.com",
 	trailingSlash: "never",
-	integrations: [
-		mdx(),
-		sitemap({
-			filter: (page) => !page.includes("/404"),
-		}),
-	],
+	integrations: [mdx(), sitemap()],
 	adapter: cloudflare({
 		platformProxy: {
 			enabled: true,
