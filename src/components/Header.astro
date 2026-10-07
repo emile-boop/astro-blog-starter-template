@@ -6,7 +6,7 @@ const isFr = pathname.startsWith('/fr');
 
 const links = isFr
   ? [
-      { href: '/fr/', label: 'Accueil' },
+      { href: '/fr', label: 'Accueil' },
       { href: '/fr/biography', label: 'Biographie' },
       { href: '/fr/portfolio', label: 'Portfolio' },
       { href: '/fr/teaching', label: 'Enseignement' },
@@ -25,7 +25,7 @@ let langHref;
 if (isFr) {
   langHref = pathname.replace(/^\/fr/, '') || '/';
 } else {
-  langHref = pathname === '/' ? '/fr/' : '/fr' + pathname;
+  langHref = pathname === '/' ? '/fr' : '/fr' + pathname;
 }
 ---
 
