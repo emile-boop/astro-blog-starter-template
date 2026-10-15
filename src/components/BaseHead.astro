@@ -32,9 +32,9 @@ const canonical = new URL(pathname, Astro.site || 'https://emilesavoie.com').toS
 <link rel="canonical" href={canonical} />
 
 <!-- Hreflang (bilingual) -->
-<link rel="alternate" hreflang="en" href="https://emilesavoie.com/" />
-<link rel="alternate" hreflang="fr" href="https://emilesavoie.com/fr/" />
-<link rel="alternate" hreflang="x-default" href="https://emilesavoie.com/" />
+<link rel="alternate" hreflang="en" href={enUrl} />
+<link rel="alternate" hreflang="fr" href={frUrl} />
+<link rel="alternate" hreflang="x-default" href={enUrl} />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
