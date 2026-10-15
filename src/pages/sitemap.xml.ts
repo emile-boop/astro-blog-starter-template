@@ -1,16 +1,18 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ site }) => {
-   const pages = [
+  const pages = [
     '',
     'portfolio/',
-    'biography/', 
+    'biography/',
     'teaching/',
+    'contact/',
     'fr/',
     'fr/portfolio/',
     'fr/biography/',
     'fr/teaching/',
-  ];
+    'fr/contact/',
+];
 
   const lastmod = new Date().toISOString();
   const origin = site?.origin ?? 'https://emilesavoie.com';
