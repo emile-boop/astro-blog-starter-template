@@ -6,12 +6,10 @@ export const GET: APIRoute = async ({ site }) => {
     'portfolio/',
     'biography/', 
     'teaching/',
-    'blog/',
     'fr/',
     'fr/portfolio/',
     'fr/biography/',
     'fr/teaching/',
-    'fr/blog/',
   ];
 
   const lastmod = new Date().toISOString();
