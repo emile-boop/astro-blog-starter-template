@@ -16,6 +16,11 @@ const {
 const rawPath = Astro.url.pathname;
 const pathname = rawPath.endsWith('/') ? rawPath : rawPath + '/';
 const canonical = new URL(pathname, Astro.site || 'https://emilesavoie.com').toString();
+
+const isFr = pathname.startsWith('/fr/');
+const basePath = isFr ? pathname.replace(/^\/fr/, '') : pathname;
+const enUrl = new URL(basePath, 'https://emilesavoie.com').toString();
+const frUrl = new URL('/fr' + basePath, 'https://emilesavoie.com').toString();
 ---
 
 <!-- Global Metadata -->
