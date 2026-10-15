@@ -18,11 +18,11 @@ export const GET: APIRoute = async ({ site }) => {
   const origin = site?.origin ?? 'https://emilesavoie.com';
 
   const urls = pages
-    .map(
-      (page) =>
-        `  <url>\n    <loc>${origin}/${page}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`
-    )
-    .join('\n');
+  .map((page) => {
+    const loc = page === '' ? `${origin}/` : `${origin}/${page}`;
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+  })
+  .join('\n');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`;
 
