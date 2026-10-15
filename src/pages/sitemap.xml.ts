@@ -1,17 +1,17 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = async ({ site }) => {
-  const pages = [
+   const pages = [
     '',
-    'portfolio',
-    'biography',
-    'teaching',
-    'blog',
-    'fr',
-    'fr/portfolio',
-    'fr/biography',
-    'fr/teaching',
-    'fr/blog',
+    'portfolio/',
+    'biography/', 
+    'teaching/',
+    'blog/',
+    'fr/',
+    'fr/portfolio/',
+    'fr/biography/',
+    'fr/teaching/',
+    'fr/blog/',
   ];
 
   const lastmod = new Date().toISOString();
