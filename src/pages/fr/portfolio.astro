@@ -206,9 +206,10 @@ const discography = [
 											{group.works.map((work) => (
 												<tr>
 													<td class="works-table__title">
-														{work.title}
+														{work.url
+															? <a href={work.url} target="_blank" rel="noopener noreferrer" class="works-table__link">{work.title}</a>
+															: work.title}
 														{work.movements && <span class="works-table__mvt">{work.movements}</span>}
-													</td>
 													<td class="works-table__inst">{work.instrumentation}</td>
 													<td class="works-table__dur">{work.duration}</td>
 												</tr>
