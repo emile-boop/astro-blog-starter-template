@@ -106,6 +106,8 @@ for (const c of compositions) {
 		compositionsByYear.push(currentGroup);
 	}
 	currentGroup.works.push(c);
+}
+
 // Build audio paths array — full URLs stay in JS only, never in HTML data attributes
 const audioPaths = [];
 for (const c of compositions) {
@@ -503,8 +505,13 @@ const jsonLd = JSON.stringify({
 	}
 </style>
 
-	<script is:inline define:vars={{ audioPaths }}>
-    // === Tab navigation (existing) ===
+	<script type="application/json" id="audio-paths" set:html={JSON.stringify(audioPaths)}></script>
+
+	<script>
+	// === Read audio paths from JSON tag ===
+	const audioPaths = JSON.parse(document.getElementById('audio-paths').textContent);
+
+	// === Tab navigation (existing) ===
     const tabs = document.querySelectorAll('.portfolio__tab');
     const sections = document.querySelectorAll('.portfolio__section');
 
