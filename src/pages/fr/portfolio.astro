@@ -85,7 +85,7 @@ const compositions = [
 	{ title: "Pris", year: "2014", instrumentation: "Clavecin, flûte à bec", duration: "2:57", movements: "Composé 2013–2014" },
 	// 2013
 	{ title: "Valse première ", year: "2013", instrumentation: "Trois flûtes, basson, piano", duration: "3:10" },
-	{ title: "Danse Nº1", year: "2013", instrumentation: "Orchestre symphonique", duration: "1:58" },
+	{ title: "Danse n° 1", year: "2013", instrumentation: "Orchestre symphonique", duration: "1:58", audio: "danse1" },
 	{ title: "Brindille", year: "2013", instrumentation: "Deux flûtes", duration: "0:33" },
 	{ title: "Course", year: "2013", instrumentation: "Basson, euphonium", duration: "0:52" },
 	// 2012
@@ -106,6 +106,15 @@ for (const c of compositions) {
 		compositionsByYear.push(currentGroup);
 	}
 	currentGroup.works.push(c);
+}
+
+// Construire le tableau des chemins audio — les URL restent dans le JS, pas dans les attributs HTML
+const audioPaths = [];
+for (const c of compositions) {
+	if (c.audio) {
+		c.audioIdx = audioPaths.length;
+		audioPaths.push(`/audio/${c.audio}.m3u8`);
+	}
 }
 
 const concerts = [
@@ -210,12 +219,9 @@ const discography = [
 											{group.works.map((work) => (
 												<tr>
 													<td class="works-table__title">
-														{work.url ? (
-															<a href={work.url} target="_blank" rel="noopener noreferrer" class="works-table__link">{work.title}</a>
-														) : (
-															work.title
-														)}
-														{work.movements && <span class="works-table__mvt">{work.movements}</span>}
+   														{work.audio && <button class="audio-btn" data-idx={work.audioIdx} title="Écouter / Arrêter" aria-label="Écouter / Arrêter">&#9654;</button>}
+													    {work.title}
+													    {work.movements && <span class="works-table__mvt">{work.movements}</span>}
 													</td>
 													<td class="works-table__inst">{work.instrumentation}</td>
 													<td class="works-table__dur">{work.duration}</td>
@@ -446,9 +452,53 @@ const discography = [
 		color: var(--color-text, #1a1a1a);
 		border-bottom-style: solid;
 	}
+	.audio-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.8rem;
+		height: 1.8rem;
+		margin-right: 0.5rem;
+		border: 1px solid var(--color-border, #e5e0d8);
+		border-radius: 50%;
+		background: transparent;
+		color: var(--color-accent, #6b5b4a);
+		font-size: 0.65rem;
+		cursor: pointer;
+		vertical-align: middle;
+		transition: all 0.2s ease;
+		padding: 0;
+		line-height: 1;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	.audio-btn:hover {
+		background: var(--color-accent, #6b5b4a);
+		color: #fff;
+		border-color: var(--color-accent, #6b5b4a);
+	}
+
+	.audio-btn--playing {
+		background: var(--color-accent, #6b5b4a);
+		color: #fff;
+		border-color: var(--color-accent, #6b5b4a);
+		animation: audio-pulse 1.5s ease-in-out infinite;
+	}
+		
+	@keyframes audio-pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.65; }
+	}
 </style>
 
+<script type="application/json" id="audio-paths" set:html={JSON.stringify(audioPaths)}></script>
+
 <script>
+	// === Lire les chemins audio depuis le tag JSON ===
+	const audioPaths = JSON.parse(document.getElementById('audio-paths').textContent);
+
+	// === Navigation par onglets ===
 	const tabs = document.querySelectorAll('.portfolio__tab');
 	const sections = document.querySelectorAll('.portfolio__section');
 
@@ -476,4 +526,91 @@ const discography = [
 	);
 
 	sections.forEach((s) => observer.observe(s));
+
+	// === Lecture audio avec HLS ===
+	let currentAudio = null;
+	let currentHls = null;
+	let currentBtn = null;
+	let hlsJsLoaded = false;
+
+	function loadHlsJs() {
+		if (hlsJsLoaded || window.Hls) {
+			hlsJsLoaded = true;
+			return Promise.resolve();
+		}
+		return new Promise((resolve, reject) => {
+			const script = document.createElement('script');
+			script.src = 'https://cdn.jsdelivr.net/npm/hls.js@1';
+			script.onload = () => { hlsJsLoaded = true; resolve(); };
+			script.onerror = reject;
+			document.head.appendChild(script);
+		});
+	}
+
+	function stopAudio() {
+		if (currentAudio) {
+			currentAudio.pause();
+			currentAudio.removeAttribute('src');
+			currentAudio.load();
+			currentAudio = null;
+		}
+		if (currentHls) {
+			currentHls.destroy();
+			currentHls = null;
+		}
+		if (currentBtn) {
+			currentBtn.innerHTML = '&#9654;';
+			currentBtn.classList.remove('audio-btn--playing');
+			currentBtn.setAttribute('title', 'Écouter / Arrêter');
+			currentBtn.setAttribute('aria-label', 'Écouter / Arrêter');
+			currentBtn = null;
+		}
+	}
+
+	async function toggleAudio(idx, btn) {
+		if (currentBtn === btn) {
+			stopAudio();
+			return;
+		}
+		stopAudio();
+		try {
+			await loadHlsJs();
+		} catch (e) {
+			console.error('Impossible de charger hls.js');
+			return;
+		}
+		const path = audioPaths[idx];
+		if (!path) return;
+		const audio = new Audio();
+		if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+			audio.src = path;
+		} else if (window.Hls && Hls.isSupported()) {
+			const hls = new Hls();
+			hls.loadSource(path);
+			hls.attachMedia(audio);
+			currentHls = hls;
+		} else {
+			audio.src = path;
+		}
+		currentAudio = audio;
+		currentBtn = btn;
+		btn.innerHTML = '&#9632;';
+		btn.classList.add('audio-btn--playing');
+		btn.setAttribute('title', 'Arrêter');
+		btn.setAttribute('aria-label', 'Arrêter');
+		audio.addEventListener('ended', () => stopAudio());
+		audio.addEventListener('error', () => stopAudio());
+		audio.play().catch(() => stopAudio());
+	}
+
+	document.querySelectorAll('.audio-btn').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const idx = parseInt(btn.dataset.idx, 10);
+			toggleAudio(idx, btn);
+		});
+	});
+
+	// === Désactiver le clic droit ===
+	document.addEventListener('contextmenu', (e) => e.preventDefault());
 </script>
+
