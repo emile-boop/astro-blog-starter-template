@@ -553,6 +553,14 @@ const discography = [
 	}
 
 	function stopAudio() {
+		if (fadeTimer) {
+			clearTimeout(fadeTimer);
+			fadeTimer = null;
+		}
+		if (fadeInterval) {
+			clearInterval(fadeInterval);
+			fadeInterval = null;
+		}
 		if (currentAudio) {
 			currentAudio.pause();
 			currentAudio.removeAttribute('src');
