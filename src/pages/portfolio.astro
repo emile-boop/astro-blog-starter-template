@@ -623,10 +623,25 @@ const jsonLd = JSON.stringify({
         btn.classList.add('audio-btn--playing');
         btn.setAttribute('title', 'Stop');
         btn.setAttribute('aria-label', 'Stop');
-        audio.addEventListener('ended', () => stopAudio());
-        audio.addEventListener('error', () => stopAudio());
-        audio.play().catch(() => stopAudio());
-    }
+ 		audio.addEventListener('ended', () => stopAudio());
+		audio.addEventListener('error', () => stopAudio());
+		audio.volume = 1;
+		audio.play().catch(() => stopAudio());
+
+		// Fade out après 30 secondes
+		fadeTimer = setTimeout(() => {
+			const fadeStart = Date.now();
+			fadeInterval = setInterval(() => {
+				const elapsed = (Date.now() - fadeStart) / (FADE_DURATION * 1000);
+				if (currentAudio) {
+					currentAudio.volume = Math.max(0, 1 - elapsed);
+					if (currentAudio.volume <= 0) {
+						stopAudio();
+					}
+				}
+			}, 50);
+		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
+	}
 
     document.querySelectorAll('.audio-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
