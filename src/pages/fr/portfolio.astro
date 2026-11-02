@@ -529,7 +529,6 @@ const discography = [
 
 	// === Lecture audio avec HLS ===
 	let currentAudio = null;
-	let currentHls = null;
 	let currentBtn = null;
 	let fadeTimer = null;
 	let fadeInterval = null;
@@ -551,10 +550,6 @@ const discography = [
 			currentAudio.removeAttribute('src');
 			currentAudio.load();
 			currentAudio = null;
-		}
-		if (currentHls) {
-			currentHls.destroy();
-			currentHls = null;
 		}
 		if (currentBtn) {
 			currentBtn.innerHTML = '&#9654;';
