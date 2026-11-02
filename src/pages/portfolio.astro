@@ -541,7 +541,6 @@ const jsonLd = JSON.stringify({
 
     // === Audio playback with HLS ===
 	let currentAudio = null;
-	let currentHls = null;
 	let currentBtn = null;
 	let fadeTimer = null;
 	let fadeInterval = null;
@@ -564,10 +563,6 @@ const jsonLd = JSON.stringify({
 			currentAudio.load();
 			currentAudio = null;
 		}
-        if (currentHls) {
-            currentHls.destroy();
-            currentHls = null;
-        }
         if (currentBtn) {
             currentBtn.innerHTML = '&#9654;';
             currentBtn.classList.remove('audio-btn--playing');
