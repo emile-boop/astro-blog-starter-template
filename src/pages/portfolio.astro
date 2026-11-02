@@ -565,12 +565,20 @@ const jsonLd = JSON.stringify({
     }
 
     function stopAudio() {
-        if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.removeAttribute('src');
-            currentAudio.load();
-            currentAudio = null;
-        }
+		if (fadeTimer) {
+			clearTimeout(fadeTimer);
+			fadeTimer = null;
+		}
+		if (fadeInterval) {
+			clearInterval(fadeInterval);
+			fadeInterval = null;
+		}
+		if (currentAudio) {
+			currentAudio.pause();
+			currentAudio.removeAttribute('src');
+			currentAudio.load();
+			currentAudio = null;
+		}
         if (currentHls) {
             currentHls.destroy();
             currentHls = null;
