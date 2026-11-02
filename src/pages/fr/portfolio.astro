@@ -532,6 +532,11 @@ const discography = [
 	let currentHls = null;
 	let currentBtn = null;
 	let hlsJsLoaded = false;
+	let fadeTimer = null;
+	let fadeInterval = null;
+
+	const PREVIEW_DURATION = 30; // secondes avant le fade out
+	const FADE_DURATION = 2;     // durée du fondu en secondes
 
 	function loadHlsJs() {
 		if (hlsJsLoaded || window.Hls) {
