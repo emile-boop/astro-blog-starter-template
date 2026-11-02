@@ -595,16 +595,7 @@ const discography = [
 		const path = audioPaths[idx];
 		if (!path) return;
 		const audio = new Audio();
-		if (audio.canPlayType('application/vnd.apple.mpegurl')) {
-			audio.src = path;
-		} else if (window.Hls && Hls.isSupported()) {
-			const hls = new Hls();
-			hls.loadSource(path);
-			hls.attachMedia(audio);
-			currentHls = hls;
-		} else {
-			audio.src = path;
-		}
+		audio.src = path;
 		currentAudio = audio;
 		currentBtn = btn;
 		btn.innerHTML = '&#9632;';
