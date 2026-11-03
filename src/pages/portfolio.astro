@@ -539,23 +539,34 @@ const jsonLd = JSON.stringify({
 
     sections.forEach((s) => observer.observe(s));
 
-    // === Audio playback with HLS ===
+    // === Audio playback with Web Audio API ===
 	let currentAudio = null;
 	let currentBtn = null;
 	let fadeTimer = null;
-	let fadeInterval = null;
+	let hardStopTimer = null;
+	let audioContext = null;
+	let gainNode = null;
+	let sourceNode = null;
 
-	const PREVIEW_DURATION = 30; // secondes avant le fade out
-	const FADE_DURATION = 2;     // durée du fondu en secondes
+	const PREVIEW_DURATION = 30; // seconds before fade out
+	const FADE_DURATION = 2;     // fade duration in seconds
 
     function stopAudio() {
 		if (fadeTimer) {
 			clearTimeout(fadeTimer);
 			fadeTimer = null;
 		}
-		if (fadeInterval) {
-			clearInterval(fadeInterval);
-			fadeInterval = null;
+		if (hardStopTimer) {
+			clearTimeout(hardStopTimer);
+			hardStopTimer = null;
+		}
+		if (sourceNode) {
+			sourceNode.disconnect();
+			sourceNode = null;
+		}
+		if (gainNode) {
+			gainNode.disconnect();
+			gainNode = null;
 		}
 		if (currentAudio) {
 			currentAudio.pause();
@@ -580,6 +591,13 @@ const jsonLd = JSON.stringify({
         stopAudio();
         const path = audioPaths[idx];
         if (!path) return;
+
+		// Create AudioContext on first click (browsers require user interaction)
+		if (!audioContext) {
+			audioContext = new (window.AudioContext || window.webkitAudioContext)();
+		}
+		await audioContext.resume();
+
 		const audio = new Audio();
 		audio.src = path;
         currentAudio = audio;
@@ -588,24 +606,28 @@ const jsonLd = JSON.stringify({
         btn.classList.add('audio-btn--playing');
         btn.setAttribute('title', 'Stop');
         btn.setAttribute('aria-label', 'Stop');
+
+		// Route audio through Web Audio API for perfectly smooth volume control
+		sourceNode = audioContext.createMediaElementSource(audio);
+		gainNode = audioContext.createGain();
+		gainNode.gain.value = 1;
+		sourceNode.connect(gainNode);
+		gainNode.connect(audioContext.destination);
+
  		audio.addEventListener('ended', () => stopAudio());
 		audio.addEventListener('error', () => stopAudio());
-		audio.volume = 1;
 		audio.play().catch(() => stopAudio());
 
-		// Fade out après 30 secondes — courbe exponentielle + setInterval 16ms
+		// Fade out after 28 seconds — exponentialRamp (native audio engine, perfectly smooth)
 		fadeTimer = setTimeout(() => {
-			const fadeStart = performance.now();
-			fadeInterval = setInterval(() => {
-				const elapsed = (performance.now() - fadeStart) / (FADE_DURATION * 1000);
-				if (currentAudio) {
-					// Courbe exponentielle : l'oreille perçoit le volume logarithmiquement
-					currentAudio.volume = Math.max(0, Math.pow(1 - elapsed, 3));
-					if (currentAudio.volume <= 0.001) {
-						stopAudio();
-					}
-				}
-			}, 16);
+			if (gainNode && audioContext) {
+				const now = audioContext.currentTime;
+				gainNode.gain.cancelScheduledValues(now);
+				gainNode.gain.setValueAtTime(1, now);
+				gainNode.gain.exponentialRampToValueAtTime(0.001, now + FADE_DURATION);
+			}
+			// Stop audio after fade completes
+			hardStopTimer = setTimeout(() => stopAudio(), FADE_DURATION * 1000);
 		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
 	}
 
