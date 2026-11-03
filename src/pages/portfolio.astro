@@ -558,6 +558,10 @@ const jsonLd = JSON.stringify({
 			cancelAnimationFrame(fadeInterval);
 			fadeInterval = null;
 		}
+		if (hardStopTimer) {
+			clearTimeout(hardStopTimer);
+			hardStopTimer = null;
+		}
 		if (currentAudio) {
 			currentAudio.pause();
 			currentAudio.removeAttribute('src');
