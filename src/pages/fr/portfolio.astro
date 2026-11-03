@@ -532,7 +532,6 @@ const discography = [
 	let currentBtn = null;
 	let fadeTimer = null;
 	let fadeInterval = null;
-	let hardStopTimer = null;
 
 	const PREVIEW_DURATION = 30; // secondes avant le fade out
 	const FADE_DURATION = 2;     // durée du fondu en secondes
@@ -543,12 +542,8 @@ const discography = [
 			fadeTimer = null;
 		}
 		if (fadeInterval) {
-			cancelAnimationFrame(fadeInterval);
+			clearInterval(fadeInterval);
 			fadeInterval = null;
-		}
-		if (hardStopTimer) {
-			clearTimeout(hardStopTimer);
-			hardStopTimer = null;
 		}
 		if (currentAudio) {
 			currentAudio.pause();
@@ -586,25 +581,19 @@ const discography = [
 		audio.volume = 1;
 		audio.play().catch(() => stopAudio());
 
-		// Hard stop à 30 secondes (fonctionne même si l'onglet est en arrière-plan)
-		hardStopTimer = setTimeout(() => stopAudio(), PREVIEW_DURATION * 1000);
-
-		// Fade out après 30 secondes — courbe exponentielle + requestAnimationFrame
+		// Fade out après 30 secondes — courbe exponentielle + setInterval 16ms
 		fadeTimer = setTimeout(() => {
 			const fadeStart = performance.now();
-			function fadeStep() {
+			fadeInterval = setInterval(() => {
 				const elapsed = (performance.now() - fadeStart) / (FADE_DURATION * 1000);
 				if (currentAudio) {
 					// Courbe exponentielle : l'oreille perçoit le volume logarithmiquement
 					currentAudio.volume = Math.max(0, Math.pow(1 - elapsed, 3));
 					if (currentAudio.volume <= 0.001) {
 						stopAudio();
-					} else {
-						fadeInterval = requestAnimationFrame(fadeStep);
 					}
 				}
-			}
-			fadeInterval = requestAnimationFrame(fadeStep);
+			}, 16);
 		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
 	}
 
@@ -618,4 +607,3 @@ const discography = [
 	// === Désactiver le clic droit ===
 	document.addEventListener('contextmenu', (e) => e.preventDefault());
 </script>
-
