@@ -669,6 +669,13 @@ const jsonLd = JSON.stringify({
         });
     });
 
+	// === Arrêter l'audio quand l'onglet n'est plus actif ===
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden) {
+			stopAudio();
+		}
+	});
+
     // === Disable right-click context menu ===
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 </script>
