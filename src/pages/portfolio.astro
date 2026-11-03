@@ -598,6 +598,9 @@ const jsonLd = JSON.stringify({
 		audio.volume = 1;
 		audio.play().catch(() => stopAudio());
 
+		// Hard stop à 30 secondes (fonctionne même si l'onglet est en arrière-plan)
+		hardStopTimer = setTimeout(() => stopAudio(), PREVIEW_DURATION * 1000);
+
 		// Fade out après 30 secondes — courbe exponentielle + requestAnimationFrame
 		fadeTimer = setTimeout(() => {
 			const fadeStart = performance.now();
