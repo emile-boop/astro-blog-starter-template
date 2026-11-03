@@ -657,6 +657,13 @@ const discography = [
 		});
 	});
 
+	// === Arrêter l'audio quand l'onglet n'est plus actif ===
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden) {
+			stopAudio();
+		}
+	});
+
 	// === Désactiver le clic droit ===
 	document.addEventListener('contextmenu', (e) => e.preventDefault());
 </script>
