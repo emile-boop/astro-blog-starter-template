@@ -539,15 +539,11 @@ const jsonLd = JSON.stringify({
 
     sections.forEach((s) => observer.observe(s));
 
-    // === Audio playback — hybrid approach ===
-	// HTML5 Audio for playback (robust), Web Audio API only for the fade (smooth)
+    // === Audio playback — HTML5 Audio + setInterval ===
 	let currentAudio = null;
 	let currentBtn = null;
 	let fadeTimer = null;
-	let hardStopTimer = null;
-	let audioContext = null;
-	let gainNode = null;
-	let sourceNode = null;
+	let fadeInterval = null;
 
 	const PREVIEW_DURATION = 30; // seconds before fade out
 	const FADE_DURATION = 2;     // fade duration in seconds
@@ -557,17 +553,9 @@ const jsonLd = JSON.stringify({
 			clearTimeout(fadeTimer);
 			fadeTimer = null;
 		}
-		if (hardStopTimer) {
-			clearTimeout(hardStopTimer);
-			hardStopTimer = null;
-		}
-		if (sourceNode) {
-			sourceNode.disconnect();
-			sourceNode = null;
-		}
-		if (gainNode) {
-			gainNode.disconnect();
-			gainNode = null;
+		if (fadeInterval) {
+			clearInterval(fadeInterval);
+			fadeInterval = null;
 		}
 		if (currentAudio) {
 			currentAudio.pause();
@@ -593,13 +581,6 @@ const jsonLd = JSON.stringify({
         const path = audioPaths[idx];
         if (!path) return;
 
-		// Create AudioContext on click (browsers require user interaction)
-		if (!audioContext) {
-			audioContext = new (window.AudioContext || window.webkitAudioContext)();
-		}
-		await audioContext.resume();
-
-		// Playback via plain HTML5 Audio — robust under system load
 		const audio = new Audio();
 		audio.src = path;
 		audio.volume = 1;
@@ -614,25 +595,19 @@ const jsonLd = JSON.stringify({
 		audio.addEventListener('error', () => stopAudio());
 		audio.play().catch(() => stopAudio());
 
-		// Fade out after 28 seconds — reroute through Web Audio API only for the fade
+		// Fade out after 28 seconds — exponential curve + setInterval 16ms
 		fadeTimer = setTimeout(() => {
-			if (!audioContext || !currentAudio) return;
-
-			// Reroute audio through Web Audio API for a perfectly smooth fade
-			sourceNode = audioContext.createMediaElementSource(currentAudio);
-			gainNode = audioContext.createGain();
-			gainNode.gain.value = 1;
-			sourceNode.connect(gainNode);
-			gainNode.connect(audioContext.destination);
-
-			// Exponential ramp — native audio engine, no stepping
-			const now = audioContext.currentTime;
-			gainNode.gain.cancelScheduledValues(now);
-			gainNode.gain.setValueAtTime(1, now);
-			gainNode.gain.exponentialRampToValueAtTime(0.001, now + FADE_DURATION);
-
-			// Stop audio after fade completes
-			hardStopTimer = setTimeout(() => stopAudio(), FADE_DURATION * 1000);
+			const fadeStart = performance.now();
+			fadeInterval = setInterval(() => {
+				const elapsed = (performance.now() - fadeStart) / (FADE_DURATION * 1000);
+				if (currentAudio) {
+					// Exponential curve: the ear perceives volume logarithmically
+					currentAudio.volume = Math.max(0, Math.pow(1 - elapsed, 3));
+					if (currentAudio.volume <= 0.001) {
+						stopAudio();
+					}
+				}
+			}, 16);
 		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
 	}
 
