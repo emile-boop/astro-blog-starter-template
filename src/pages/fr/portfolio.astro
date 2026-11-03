@@ -582,7 +582,7 @@ const discography = [
 
 		// Créer l'AudioContext au premier clic (les navigateurs exigent une interaction utilisateur)
 		if (!audioContext) {
-			audioContext = new (window.AudioContext || window.webkitAudioContext)();
+			audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
 		}
 		await audioContext.resume();
 
