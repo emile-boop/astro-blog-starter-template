@@ -56,7 +56,7 @@ const compositions = [
 	{ title: "Sonate en trio", year: "2021", instrumentation: "Flûte, violon, basse continue", duration: "2:07", movements: "Mouvement 1" },
 	// 2020
 	{ title: "TEG", year: "2020", instrumentation: "Électroacoustique", duration: "3:40", audio: "teg" },
-	{ title: "Libération", year: "2020", instrumentation: "Piano, flûte", duration: "2:19", audio: "liberation" },
+	{ title: "Libération", year: "2020", instrumentation: "Piano, flûte", duration: "2:19" },
 	{ title: "Impromptu Nº 1", year: "2020", instrumentation: "Piano", duration: "1:40" },
 	{ title: "Scherzo Nº 2", year: "2020", instrumentation: "Piano", duration: "6:19" },
 	{ title: "Adagio pour flûte et piano", year: "2020", instrumentation: "Piano, flûte", duration: "2:56" },
@@ -593,6 +593,14 @@ const discography = [
 		const audio = new Audio();
 		audio.src = path;
 		audio.volume = 1;
+
+		// Empêcher l'accès au-delà de 30 secondes (même via les contrôles média du navigateur)
+		audio.addEventListener('timeupdate', () => {
+			if (audio.currentTime >= PREVIEW_DURATION) {
+				stopAudio();
+			}
+		});
+
 		currentAudio = audio;
 		currentBtn = btn;
 		btn.innerHTML = '&#9632;';
@@ -663,6 +671,13 @@ const discography = [
 			stopAudio();
 		}
 	});
+
+	// === Désactiver le seek dans les contrôles média du navigateur ===
+	if ('mediaSession' in navigator) {
+		navigator.mediaSession.setActionHandler('seekto', null);
+		navigator.mediaSession.setActionHandler('seekbackward', null);
+		navigator.mediaSession.setActionHandler('seekforward', null);
+	}
 
 	// === Désactiver le clic droit ===
 	document.addEventListener('contextmenu', (e) => e.preventDefault());
