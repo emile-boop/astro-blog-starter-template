@@ -1,21 +1,13 @@
-// @ts-check
-import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
-import cloudflare from "@astrojs/cloudflare";
-
-// https://astro.build/config
-export default defineConfig({
-	site: "https://emilesavoie.com",
-	integrations: [mdx(), sitemap()],
-	adapter: cloudflare({
-		platformProxy: {
-			enabled: true,
-		},
-	}),
-	trailingSlash: "never",
-	build: {
-		format: "file",
-	},
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    pubDate: z.coerce.date(),
+    description: z.string().optional(),
+  }),
 });
+
+export const collections = { blog };
