@@ -527,15 +527,11 @@ const discography = [
 
 	sections.forEach((s) => observer.observe(s));
 
-	// === Lecture audio — approche hybride ===
-	// HTML5 Audio pour la lecture (robuste), Web Audio API uniquement pour le fondu (lisse)
+	// === Lecture audio — HTML5 Audio + setInterval ===
 	let currentAudio = null;
 	let currentBtn = null;
 	let fadeTimer = null;
-	let hardStopTimer = null;
-	let audioContext = null;
-	let gainNode = null;
-	let sourceNode = null;
+	let fadeInterval = null;
 
 	const PREVIEW_DURATION = 30; // secondes avant le fade out
 	const FADE_DURATION = 2;     // durée du fondu en secondes
@@ -545,17 +541,9 @@ const discography = [
 			clearTimeout(fadeTimer);
 			fadeTimer = null;
 		}
-		if (hardStopTimer) {
-			clearTimeout(hardStopTimer);
-			hardStopTimer = null;
-		}
-		if (sourceNode) {
-			sourceNode.disconnect();
-			sourceNode = null;
-		}
-		if (gainNode) {
-			gainNode.disconnect();
-			gainNode = null;
+		if (fadeInterval) {
+			clearInterval(fadeInterval);
+			fadeInterval = null;
 		}
 		if (currentAudio) {
 			currentAudio.pause();
@@ -581,13 +569,6 @@ const discography = [
 		const path = audioPaths[idx];
 		if (!path) return;
 
-		// Créer l'AudioContext au clic (geste utilisateur requis par les navigateurs)
-		if (!audioContext) {
-			audioContext = new (window.AudioContext || window.webkitAudioContext)();
-		}
-		await audioContext.resume();
-
-		// Lecture en HTML5 Audio simple — robuste sous charge système
 		const audio = new Audio();
 		audio.src = path;
 		audio.volume = 1;
@@ -602,25 +583,19 @@ const discography = [
 		audio.addEventListener('error', () => stopAudio());
 		audio.play().catch(() => stopAudio());
 
-		// Fade out après 28 secondes — rerouter through Web Audio API uniquement pour le fondu
+		// Fade out après 28 secondes — courbe exponentielle + setInterval 16ms
 		fadeTimer = setTimeout(() => {
-			if (!audioContext || !currentAudio) return;
-
-			// Rerouter l'audio through Web Audio API pour un fondu parfaitement lisse
-			sourceNode = audioContext.createMediaElementSource(currentAudio);
-			gainNode = audioContext.createGain();
-			gainNode.gain.value = 1;
-			sourceNode.connect(gainNode);
-			gainNode.connect(audioContext.destination);
-
-			// Fondu exponentiel — moteur audio natif, aucun palier
-			const now = audioContext.currentTime;
-			gainNode.gain.cancelScheduledValues(now);
-			gainNode.gain.setValueAtTime(1, now);
-			gainNode.gain.exponentialRampToValueAtTime(0.001, now + FADE_DURATION);
-
-			// Arrêter l'audio après la fin du fondu
-			hardStopTimer = setTimeout(() => stopAudio(), FADE_DURATION * 1000);
+			const fadeStart = performance.now();
+			fadeInterval = setInterval(() => {
+				const elapsed = (performance.now() - fadeStart) / (FADE_DURATION * 1000);
+				if (currentAudio) {
+					// Courbe exponentielle : l'oreille perçoit le volume logarithmiquement
+					currentAudio.volume = Math.max(0, Math.pow(1 - elapsed, 3));
+					if (currentAudio.volume <= 0.001) {
+						stopAudio();
+					}
+				}
+			}, 16);
 		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
 	}
 
