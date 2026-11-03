@@ -542,7 +542,7 @@ const discography = [
 			fadeTimer = null;
 		}
 		if (fadeInterval) {
-			clearInterval(fadeInterval);
+			cancelAnimationFrame(fadeInterval);
 			fadeInterval = null;
 		}
 		if (currentAudio) {
@@ -581,18 +581,22 @@ const discography = [
 		audio.volume = 1;
 		audio.play().catch(() => stopAudio());
 
-		// Fade out après 30 secondes
+		// Fade out après 30 secondes — courbe exponentielle + requestAnimationFrame
 		fadeTimer = setTimeout(() => {
-			const fadeStart = Date.now();
-			fadeInterval = setInterval(() => {
-				const elapsed = (Date.now() - fadeStart) / (FADE_DURATION * 1000);
+			const fadeStart = performance.now();
+			function fadeStep() {
+				const elapsed = (performance.now() - fadeStart) / (FADE_DURATION * 1000);
 				if (currentAudio) {
-					currentAudio.volume = Math.max(0, 1 - elapsed);
-					if (currentAudio.volume <= 0) {
+					// Courbe exponentielle : l'oreille perçoit le volume logarithmiquement
+					currentAudio.volume = Math.max(0, Math.pow(1 - elapsed, 3));
+					if (currentAudio.volume <= 0.001) {
 						stopAudio();
+					} else {
+						fadeInterval = requestAnimationFrame(fadeStep);
 					}
 				}
-			}, 50);
+			}
+			fadeInterval = requestAnimationFrame(fadeStep);
 		}, (PREVIEW_DURATION - FADE_DURATION) * 1000);
 	}
 
